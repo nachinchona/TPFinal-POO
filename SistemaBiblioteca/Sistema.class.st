@@ -56,6 +56,11 @@ colBibliotecas add: unaBiblioteca .
 ]
 
 { #category : #'as yet unclassified' }
+Sistema >> buscarBibliotecaConId: unaId [
+colBibliotecas detect: [ :b | b id = unaId ] ifNone: [ nil ].
+]
+
+{ #category : #'as yet unclassified' }
 Sistema >> buscarUsuarioConDni: unDni [
 ^ colUsuarios detect: [ :u | u dni = unDni asInteger] ifNone: [ nil ].
 ]
