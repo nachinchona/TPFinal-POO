@@ -1,5 +1,5 @@
 Class {
-	#name : #'BotonMostrarBibliotecas_UI',
+	#name : #'BotonMostrarBiblioteca_UI',
 	#superclass : #SimpleButtonMorph,
 	#instVars : [
 		'system'
@@ -8,18 +8,18 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-BotonMostrarBibliotecas_UI >> asignarSistema: unSistema [
+BotonMostrarBiblioteca_UI >> asignarSistema: unSistema [
 system := unSistema .
 ]
 
 { #category : #'as yet unclassified' }
-BotonMostrarBibliotecas_UI >> inicializarConSistema: unSistema [
+BotonMostrarBiblioteca_UI >> inicializarConSistema: unSistema [
 self asignarSistema: unSistema.
 self label: 'Lista de bibliotecas' font: (LogicalFont familyName: 'Roboto' pointSize: 14). 
 ]
 
 { #category : #'event handling' }
-BotonMostrarBibliotecas_UI >> mouseUp: anEvent [
+BotonMostrarBiblioteca_UI >> mouseUp: anEvent [
 |userInput unaBiblioteca|
 super mouseUp: anEvent .
 userInput := UIManager default request: 'Ingrese la ID de biblioteca que desea buscar: '.
