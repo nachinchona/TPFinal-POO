@@ -6,11 +6,27 @@ Class {
 		'system',
 		'bAgregarBiblioteca',
 		'bMostrarBibliotecas',
-		'bIniciarSesion',
-		'bCerrar'
+		'bIniciarSesion'
 	],
 	#category : #SistemaBiblioteca
 }
+
+{ #category : #'as yet unclassified' }
+Sistema_UI class >> crearVentanaConAncho: unAncho altura: unaAltura [
+|frame barra contenedorTitulo bCerrar|
+"este metodo querdaria mejor como parte de BorderedMorph, pero para que quede todo en el mismo paquete es de SistemaUI"
+frame := self new color: Color gray; extent: unAncho@unaAltura; borderColor: Color lightGray; borderWidth: 3.
+barra := self new color: Color gray; extent: unAncho@20; borderColor: Color lightGray; borderWidth: 3.
+contenedorTitulo := Morph new beTransparent; extent: 300@40.
+bCerrar := BotonCerrar_UI new inicializar.
+
+bCerrar position: frame topRight - bCerrar extent.
+barra position: frame position - (0@20).
+
+frame addMorph: barra.
+frame addMorph: bCerrar  inFrontOf: barra.
+^ frame
+]
 
 { #category : #'as yet unclassified' }
 Sistema_UI class >> crearVentanaConAncho: unAncho altura: unaAltura titulo: unTitulo [

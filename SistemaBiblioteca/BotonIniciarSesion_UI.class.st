@@ -21,7 +21,7 @@ self label: 'Iniciar sesión' font: (LogicalFont familyName: 'Roboto' pointSize:
 { #category : #'as yet unclassified' }
 BotonIniciarSesion_UI >> iniciarSesion [
 |userInput tempUsuario|
-userInput := UIManager default request: 'Ingrese su DNI'.
+userInput := (UIManager default request: 'Ingrese su DNI') asInteger .
 userInput 
 ifNotNil:
 [
@@ -32,7 +32,7 @@ ifNotNil:
 	]	
 	ifTrue:
 	[ 
-		tempUsuario := (system buscarUsuarioConDni: userInput).
+		tempUsuario := (system buscarUsuarioConDni: (userInput asInteger)).
 		tempUsuario ifNil: [ UIManager default abort: 'Error. Usuario no existe con DNI ingresado. '] ifNotNil: 
 		[ 
 			userInput := UIManager default request: 'Ingrese su contraseña'.
@@ -52,5 +52,5 @@ UIManager default abort: 'Error: el DNI no fue ingresado correctamente.'
 { #category : #'event handling' }
 BotonIniciarSesion_UI >> mouseUp: anEvent [
 super mouseUp: anEvent.
-^ self iniciarSesion
+self iniciarSesion
 ]

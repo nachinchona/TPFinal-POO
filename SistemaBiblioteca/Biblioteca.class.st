@@ -43,6 +43,11 @@ Biblioteca >> direccion: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+Biblioteca >> getColLibros [
+^ colLibros
+]
+
+{ #category : #'as yet unclassified' }
 Biblioteca >> getPrestamos [
 ^ colPrestamos 
 ]
