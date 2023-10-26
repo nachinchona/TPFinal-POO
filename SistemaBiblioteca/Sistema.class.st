@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 Sistema class >> default [
-|libro1 libro2 libro3 libro4 bib1 bib2 user1 user2 pres1 pres2 col1 col2 colAllLibros colAllB colAllU sistema|
+|libro1 libro2 libro3 libro4 bib1 bib2 user1 user2 admin pres1 pres2 col1 col2 colAllLibros colAllB colAllU sistema|
 
 libro1 := Libro crearConNombre: 'A-01' editorial: 'Mian' anioEdicion: 2001 autores: 1.
 libro2 := Libro crearConNombre: 'B-45' editorial: 'Yuugami' anioEdicion: 2011 autores: 1.
@@ -31,9 +31,10 @@ colAllB add: bib1; add: bib2.
 
 user1 := Usuario crearConNombre: 'Ignacio' apellido: 'Navarro' dni: 44481878 contraseña: 'asd'.
 user2 := Usuario crearConNombre: 'Sebastián' apellido: 'Navarro' dni: 32124345 contraseña: 'zxc'.
+admin := Usuario crearConNombre: 'admin' apellido: 'admin' dni: 12345678 contraseña: 'admin'.
 
 colAllU := OrderedCollection new.
-colAllU add: user1; add: user2.
+colAllU add: user1; add: user2; add: admin.
 
 col1 := OrderedCollection new. 
 col1 add: libro1; add: libro4.
