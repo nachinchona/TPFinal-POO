@@ -7,7 +7,8 @@ Class {
 		'dni',
 		'contrasenia',
 		'multado',
-		'fechaLimite'
+		'fechaLimite',
+		'bibInteres'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -17,14 +18,6 @@ Usuario class >> crearConNombre: unNombre apellido: unApellido dni: unDni contra
 |unUsuario|
 unUsuario := self new.
 unUsuario inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña.
-^ unUsuario
-]
-
-{ #category : #initialization }
-Usuario class >> crearUsuarioConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña [
-|unUsuario|
-unUsuario := self new.
-unUsuario inicializarUsuarioConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña.
 ^ unUsuario
 ]
 
@@ -38,6 +31,11 @@ Usuario >> apellido [
 Usuario >> apellido: anObject [
 
 	apellido := anObject
+]
+
+{ #category : #initialization }
+Usuario >> bibliotecasInteres [ 
+^ bibInteres 
 ]
 
 { #category : #accessing }
@@ -111,4 +109,9 @@ Usuario >> nombre [
 Usuario >> nombre: anObject [
 
 	nombre := anObject
+]
+
+{ #category : #initialization }
+Usuario >> setBibliotecasInteres: colBib [
+bibInteres := colBib .
 ]

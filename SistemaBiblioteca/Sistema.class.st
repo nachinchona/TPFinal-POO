@@ -58,7 +58,8 @@ colBibliotecas add: unaBiblioteca .
 
 { #category : #usuarios }
 Sistema >> agregarUsuario: unUsuario [
-(self buscarUsuarioConDni: (unUsuario dni)) ifNil: [  ] ifNotNil: [ colUsuarios add: unUsuario . ].
+(self buscarUsuarioConDni: (unUsuario dni)) ifNil: [ colUsuarios add: unUsuario . ] ifNotNil: [ ^false ].
+^ true
 ]
 
 { #category : #'as yet unclassified' }
