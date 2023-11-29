@@ -170,3 +170,8 @@ Biblioteca >> telefono: anObject [
 
 	telefono := anObject
 ]
+
+{ #category : #printing }
+Biblioteca >> toString [
+^ (id asString),' / ',direccion,' / ',nombre,' / ',(telefono asString),' / ',nombreRepresentante
+]
