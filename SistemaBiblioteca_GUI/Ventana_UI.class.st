@@ -53,7 +53,7 @@ Ventana_UI >> añadirAccion: unaAccion [
 
 { #category : #'as yet unclassified' }
 Ventana_UI >> añadirBoton: unBoton conMargen: unMargen [
-unBoton position: (self lastSubmorph position) + (0@(unBoton bottom+unMargen)). self addMorphBack: unBoton. 
+unBoton position: (10@(self lastSubmorph bottom + unMargen)). self addMorphBack: unBoton. 
 ]
 
 { #category : #accessing }
