@@ -48,6 +48,7 @@ frame addMorph: bCerrar  inFrontOf: barra.
 
 { #category : #'as yet unclassified' }
 Ventana_UI >> añadirAccion: unaAccion [
+"añade una accion al boton cerrar (volver entre ventanas)"
 (botones at: 1) añadirAccion: unaAccion .
 ]
 
