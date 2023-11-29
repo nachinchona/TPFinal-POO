@@ -3,7 +3,8 @@ Class {
 	#superclass : #SimpleButtonMorph,
 	#instVars : [
 		'system',
-		'accion'
+		'accion',
+		'habilitado'
 	],
 	#category : #'SistemaBiblioteca_GUI'
 }
@@ -19,13 +20,21 @@ accion := unaAccion .
 ]
 
 { #category : #'as yet unclassified' }
+BotonGenerico_UI >> deshabilitar [
+habilitado := false.
+self color: Color darkGray.
+]
+
+{ #category : #'as yet unclassified' }
 BotonGenerico_UI >> inicializarConSistema: unSistema label: unTexto [
 self asignarSistema: unSistema.
+habilitado := true.
 self label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 14). 
 ]
 
 { #category : #'event handling' }
 BotonGenerico_UI >> mouseUp: unEvento [
-super mouseUp: unEvento .
-accion value.
+super mouseUp: unEvento.
+habilitado ifTrue:
+[accion value. ].
 ]
