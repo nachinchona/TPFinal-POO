@@ -15,25 +15,38 @@ systemUI := unSistema.
 ]
 
 { #category : #'as yet unclassified' }
-BotonIniciarSesion_UI >> inicializarConSistema: unSistema [
-self asignarSistema: unSistema.
-self label: 'Iniciar sesión' font: (LogicalFont familyName: 'Roboto' pointSize: 14). 
-]
-
-{ #category : #'as yet unclassified' }
 BotonIniciarSesion_UI >> inicializarConSistema: unSistema campoDNI: unCampoDNI campoPass: unCampoPass [
 campoDNI := unCampoDNI.
 campoPass := unCampoPass.
 self asignarSistema: unSistema.
-self label: 'Iniciar sesión' font: (LogicalFont familyName: 'Roboto' pointSize: 14). 
+self label: 'Iniciar sesión' font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange.
 ]
 
 { #category : #'as yet unclassified' }
 BotonIniciarSesion_UI >> iniciarSesion [
-|tempUsuario|
-tempUsuario := ((systemUI getSistema) buscarUsuarioConDni: (campoDNI getText)).
-tempUsuario ifNotNil: [self owner delete. ] ifNil: [^false].
-
+((campoDNI getText) asString = 'admin')
+ifTrue: 
+[  
+	"puede ser admin"
+	(((campoPass getText) asString) = 'admin')
+	ifTrue: [ self owner delete. systemUI vistaAdmin. ]
+	ifFalse: [ systemUI error: 'Contraseña incorrecta.' ].
+]
+ifFalse: 
+[
+	"es usuario comun"
+	|tempUsuario|
+	tempUsuario := ((systemUI getSistema) buscarUsuarioConDni: (campoDNI getText)).
+	tempUsuario
+	ifNotNil: 
+		[
+			((tempUsuario contrasenia) asString = (campoPass getText) asString)		
+			ifTrue: [ self owner delete. systemUI vistaUsuario: tempUsuario . ]
+			ifFalse: [ systemUI error: 'Contraseña incorrecta.' ].
+		] 
+	ifNil: 
+		[systemUI error: 'Usuario no existe.'].	
+]
 
 ]
 
