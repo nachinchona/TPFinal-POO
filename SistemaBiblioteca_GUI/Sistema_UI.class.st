@@ -117,11 +117,6 @@ vista añadirBoton: campoPass conMargen: 20.
 bCompletar := (BotonGenerico_UI new inicializarConSistema: system label: 'Registrar').
 vista añadirBoton: bCompletar conMargen: 20.
 
-"boton que invoca una checklist con bibliotecas"
-bElegir := BotonGenerico_UI new inicializarConSistema: system label: 'Elegir bibliotecas de interés'.
-vista añadirBoton: bElegir conMargen: 20.
-bElegir definirAccion: [ bibliotecasElegidas := (checklistModel selectedItems) collect:[ :b | bibliotecas at: b ]. bElegir color: Color darkGray; deshabilitar. checklist disable.].
-
 "checklist para seleccionar bibliotecas de interes"
 bibliotecas := Dictionary new.
 (system getBibliotecas) do: [:b | bibliotecas at: b nombre put: b].
@@ -131,13 +126,18 @@ checklistModel autoMultiSelection: true; headerLabel: 'Elegí alguna biblioteca 
 checklist := checklistModel defaultTreeMorph buildContents; vResizing: #spaceFill; hResizing:#spaceFill; extent: 370@160.
 vista añadirBoton: checklist conMargen: 20.
 
+"boton que agarra la seleccion del checklist para elegir bibliotecas"
+bElegir := BotonGenerico_UI new inicializarConSistema: system label: 'Elegir bibliotecas de interés'.
+vista añadirBoton: bElegir conMargen: 20.
+bElegir definirAccion: [ bibliotecasElegidas := (checklistModel selectedItems) collect:[ :b | bibliotecas at: b ]. bElegir color: Color darkGray; deshabilitar. checklist disable.].
+
 bCompletar definirAccion: 
 [
 |nuevoUsuario| 
 (bibliotecasElegidas isNotNil & (campoNombre getText ~= '') & (campoApellido getText ~= '') & (campoDNI getText ~= '') & (campoPass getText ~= '')) 
 ifTrue: 
 	[ 
-	nuevoUsuario := Usuario crearConNombre: (campoNombre getText) apellido: (campoApellido getText) dni: ((campoDNI getText) asNumber) contraseña: (campoPass getText). nuevoUsuario setBibliotecasInteres: (bibliotecasElegidas collect: [:b | bibliotecas at: b]). 	(system agregarUsuario: nuevoUsuario) ifTrue: [bCompletar owner delete. self mensaje: 'Registro completado con éxito!' conAccion: [self vistaPrincipal]. ] ifFalse: [ self mensaje: 'Usuario ya existente.' ]
+	nuevoUsuario := Usuario crearConNombre: (campoNombre getText) apellido: (campoApellido getText) dni: ((campoDNI getText) asNumber) contraseña: (campoPass getText). nuevoUsuario setBibliotecasInteres: bibliotecasElegidas. 	(system agregarUsuario: nuevoUsuario) ifTrue: [bCompletar owner delete. self mensaje: 'Registro completado con éxito!' conAccion: [self vistaPrincipal]. ] ifFalse: [ self mensaje: 'Usuario ya existente.' ]
 	] 
 ifFalse: 
 	[self error: 'Ha ocurrido un error, intenta de nuevo'.] 
@@ -146,7 +146,6 @@ ifFalse:
 "boton atras que vuelve a la vista principal"
 bAtras := (BotonGenerico_UI new inicializarConSistema: system label: 'Atrás').
 vista añadirBoton: bAtras conMargen: 20.
-
 bAtras definirAccion: [ bAtras owner delete. self vistaPrincipal ].
 
 vista openCenteredInWorld .
@@ -216,11 +215,19 @@ vista openCenteredInWorld .
 
 { #category : #'as yet unclassified' }
 Sistema_UI >> vistaUsuario: unUsuario [
-|vista bienvenida |
+|vista bienvenida modalidadMorph bCambioModalidad|
 vista := self class crearVentanaConAncho:  450 altura: 350 titulo: 'LIBRERÍA NACIONAL I.A'.
 
 bienvenida := TextMorph new contents: 'Bienvenido/a ',unUsuario nombre,'! :)'.
-vista añadirBoton: bienvenida conMargen: 40.
+vista añadirBoton: bienvenida conMargen: 20.
+
+modalidadMorph := TextMorph new contents: ((unUsuario esPlus) ifTrue: [ 'Usted es usuario plus.' ] ifFalse: ['Usted es usuario común.']).
+
+vista añadirBoton: modalidadMorph conMargen: 20.
+
+bCambioModalidad := (BotonGenerico_UI new inicializarConSistema: system label: 'Cambiar modalidad').
+bCambioModalidad definirAccion: [ (unUsuario cambiarModalidad: system) ifTrue: [ self mensaje: 'Usted ha cambiado su modalidad correctamente.' ] .].
+vista añadirBoton: bCambioModalidad conMargen: 20.
 
 vista openCenteredInWorld .
 
