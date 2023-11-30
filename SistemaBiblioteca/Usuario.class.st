@@ -38,6 +38,24 @@ Usuario >> bibliotecasInteres [
 ^ bibInteres 
 ]
 
+{ #category : #'as yet unclassified' }
+Usuario >> cambiarModalidad: system [
+|usuarioCambiado|
+(self esPlus)
+ifTrue: 
+[
+usuarioCambiado := Usuario crearConNombre: nombre apellido: apellido dni: dni contraseña: contrasenia .
+]
+ifFalse: 
+[ 
+usuarioCambiado := UsuarioPlus crearConNombre: nombre apellido: apellido dni: dni contraseña: contrasenia .
+].
+(system eliminarUsuario: (self dni)) ifFalse: [^false].
+(system agregarUsuario: usuarioCambiado) ifFalse: [^false].
+
+^ true
+]
+
 { #category : #accessing }
 Usuario >> contrasenia [
 
