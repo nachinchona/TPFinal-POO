@@ -73,6 +73,12 @@ Sistema >> buscarUsuarioConDni: unDni [
 ]
 
 { #category : #'as yet unclassified' }
+Sistema >> eliminarUsuario: unDni [
+colUsuarios remove: (self buscarUsuarioConDni: unDni) ifAbsent: [^false].
+^true
+]
+
+{ #category : #'as yet unclassified' }
 Sistema >> getAutores [
 ^ colAutores   
 ]
