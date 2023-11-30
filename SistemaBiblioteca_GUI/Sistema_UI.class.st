@@ -38,8 +38,8 @@ system := unSistema.
 { #category : #'as yet unclassified' }
 Sistema_UI >> mensaje: unTexto [
 |ventana texto|
-ventana := self class crearVentanaConAncho: 200 altura: 100..
 texto := TextMorph new contents: unTexto.
+ventana := self class crearVentanaConAncho: (texto width + 20) altura: (texto height + 20).
 ventana addMorphCentered: texto.
 ventana openCenteredInWorld .
 ]
