@@ -53,6 +53,8 @@ usuarioCambiado := UsuarioPlus crearConNombre: nombre apellido: apellido dni: dn
 (system eliminarUsuario: (self dni)) ifFalse: [^false].
 (system agregarUsuario: usuarioCambiado) ifFalse: [^false].
 
+self changed.
+
 ^ true
 ]
 
