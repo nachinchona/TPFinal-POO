@@ -35,17 +35,23 @@ ifTrue:
 ifFalse: 
 [
 	"es usuario comun"
-	|tempUsuario|
-	tempUsuario := ((systemUI getSistema) buscarUsuarioConDni: (campoDNI getText)).
-	tempUsuario
-	ifNotNil: 
+	((campoDNI getText ~= '') & (campoDNI asString isAllDigits) & (campoPass getText ~= ''))
+	ifTrue: 
+	[ 
+		|tempUsuario|
+		tempUsuario := ((systemUI getSistema) buscarUsuarioConDni: (campoDNI getText)).
+		tempUsuario
+		ifNotNil: 
 		[
 			((tempUsuario contrasenia) asString = (campoPass getText) asString)		
-			ifTrue: [ self owner delete. systemUI vistaUsuario: tempUsuario . ]
-			ifFalse: [ systemUI error: 'Contraseña incorrecta.' ].
+				ifTrue: [ self owner delete. systemUI vistaUsuario: (campoDNI getText) . ]
+				ifFalse: [ systemUI error: 'Contraseña incorrecta.' ].
 		] 
-	ifNil: 
-		[systemUI error: 'Usuario no existe.'].	
+		ifNil: 
+			[systemUI error: 'Usuario no existe.'].	
+	]
+	ifFalse:
+	[ systemUI error: 'Error: no ingresó correctamente en algún campo' ]
 ]
 
 ]

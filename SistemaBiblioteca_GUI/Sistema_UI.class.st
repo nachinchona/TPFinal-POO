@@ -14,11 +14,11 @@ system := unSistema .
 
 { #category : #'error handling' }
 Sistema_UI >> error: unTexto [
-|ventana|
-ventana := self class crearVentanaConAncho:  250 altura: 100  titulo: 'ERROR'.
-ventana añadirBoton: (TextMorph new contents: unTexto) conMargen: 20.
+|ventana texto|
+texto := TextMorph new contents: unTexto; color: Color lightRed; bold.
+ventana := self class crearVentanaConAncho: (texto width + 20) altura: (texto height + 20) titulo: 'ERROR'.
+ventana addMorphCentered: texto.
 ventana openCenteredInWorld .
-^ventana
 ]
 
 { #category : #'as yet unclassified' }
@@ -142,6 +142,6 @@ vista openCenteredInWorld .
 ]
 
 { #category : #'as yet unclassified' }
-Sistema_UI >> vistaUsuario: unUsuario [
-^ (VistaUsuario crearConSistema: system usuario: unUsuario)
+Sistema_UI >> vistaUsuario: unDni [
+^ (VistaUsuario crearConSistema: system usuario: unDni)
 ]

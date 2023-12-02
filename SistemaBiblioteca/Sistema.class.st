@@ -23,14 +23,14 @@ colAllLibros add: libro1; add: libro2; add: libro3; add: libro4.
 
 bib1 := Biblioteca crearConId: 1 direccion: 'Anin 1' nombre: 'Jan 1' telefono: 23456 nombreRepresentante: 'Yo'.
 bib1 setColLibros: colAllLibros.
-bib2 := Biblioteca crearConId: 2 direccion: 'Unio 19' nombre: 'Jan 2' telefono: 12345 nombreRepresentante: 'Zo'.
+bib2 := Biblioteca crearConId: 2 direccion: 'Unio 19' nombre: 'Yuugami 1' telefono: 12345 nombreRepresentante: 'Zo'.
 bib2 setColLibros: colAllLibros.
 
 colAllB := OrderedCollection new.
 colAllB add: bib1; add: bib2.
 
-user1 := Usuario crearConNombre: 'Ignacio' apellido: 'Navarro' dni: 44481878 contraseña: 'asd'.
-user2 := Usuario crearConNombre: 'Sebastián' apellido: 'Navarro' dni: 32124345 contraseña: 'zxc'.
+user1 := UsuarioComun crearConNombre: 'Ignacio' apellido: 'Navarro' dni: 44481878 contraseña: 'asd'.
+user2 := UsuarioPlus crearConNombre: 'Sebastián' apellido: 'Navarro' dni: 32124345 contraseña: 'zxc'.
 admin := Usuario crearConNombre: 'admin' apellido: 'admin' dni: 12345678 contraseña: 'admin'.
 
 colAllU := OrderedCollection new.

@@ -8,7 +8,8 @@ Class {
 		'contrasenia',
 		'multado',
 		'fechaLimite',
-		'bibInteres'
+		'bibInteres',
+		'modalidad'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -18,6 +19,15 @@ Usuario class >> crearConNombre: unNombre apellido: unApellido dni: unDni contra
 |unUsuario|
 unUsuario := self new.
 unUsuario inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña.
+^ unUsuario
+]
+
+{ #category : #initialization }
+Usuario class >> crearConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus [
+|unUsuario|
+unUsuario := self new.
+unUsuario inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus.
+
 ^ unUsuario
 ]
 
@@ -36,26 +46,6 @@ Usuario >> apellido: anObject [
 { #category : #initialization }
 Usuario >> bibliotecasInteres [ 
 ^ bibInteres 
-]
-
-{ #category : #'as yet unclassified' }
-Usuario >> cambiarModalidad: system [
-|usuarioCambiado|
-(self esPlus)
-ifTrue: 
-[
-usuarioCambiado := Usuario crearConNombre: nombre apellido: apellido dni: dni contraseña: contrasenia .
-]
-ifFalse: 
-[ 
-usuarioCambiado := UsuarioPlus crearConNombre: nombre apellido: apellido dni: dni contraseña: contrasenia .
-].
-(system eliminarUsuario: (self dni)) ifFalse: [^false].
-(system agregarUsuario: usuarioCambiado) ifFalse: [^false].
-
-self changed.
-
-^ true
 ]
 
 { #category : #accessing }
@@ -89,7 +79,7 @@ Usuario >> dni: anObject [
 
 { #category : #'as yet unclassified' }
 Usuario >> esPlus [
-^ false
+^ modalidad 
 ]
 
 { #category : #'as yet unclassified' }
@@ -103,6 +93,18 @@ apellido := unApellido.
 nombre := unNombre.
 dni := unDni.
 contrasenia := unaContraseña.
+multado := false.
+
+
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus [
+apellido := unApellido.
+nombre := unNombre.
+dni := unDni.
+contrasenia := unaContraseña.
+modalidad := esPlus .
 multado := false.
 
 
