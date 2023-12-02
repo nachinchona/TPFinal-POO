@@ -12,7 +12,8 @@ Class {
 		'checklist',
 		'bElegir',
 		'bCompletar',
-		'bAtras'
+		'bAtras',
+		'bSeleccionarTodo'
 	],
 	#category : #'SistemaBiblioteca_GUI'
 }
@@ -20,7 +21,7 @@ Class {
 { #category : #'as yet unclassified' }
 VistaRegistro class >> crearConSistema: unSistema [
 |vista|
-vista := self crearVentanaConAncho:  400 altura: 550 titulo: 'ALTA DE NUEVO USUARIO'.
+vista := self crearVentanaConAncho:  400 altura: 580 titulo: 'ALTA DE NUEVO USUARIO'.
 vista inicializarConSistema: unSistema.
 ^ vista
 
@@ -53,7 +54,7 @@ bibliotecas := Dictionary new.
 
 checklistModel := MorphTreeModel new rootItems: (bibliotecas keys).
 checklistModel autoMultiSelection: true; headerLabel: 'Elegí alguna biblioteca de interés :)'; beCheckList.
-checklist := checklistModel defaultTreeMorph buildContents; vResizing: #spaceFill; hResizing:#spaceFill; extent: 370@160.
+checklist := checklistModel defaultTreeMorph buildContents; vResizing: #spaceFill; hResizing:#spaceFill; extent: 370@120.
 self añadirBoton: checklist conMargen: 20.
 
 "boton que agarra la seleccion del checklist para elegir bibliotecas"
@@ -61,13 +62,17 @@ bElegir := BotonGenerico_UI new inicializarConSistema: system label: 'Elegir bib
 self añadirBoton: bElegir conMargen: 20.
 bElegir definirAccion: [ bibliotecasElegidas := (checklistModel selectedItems) collect:[ :b | bibliotecas at: b ]. bElegir color: Color darkGray; deshabilitar. checklist disable.].
 
+bSeleccionarTodo := BotonGenerico_UI new inicializarConSistema: system label: 'Seleccionar todas'.
+self añadirBoton: bSeleccionarTodo conMargen: 20.
+bSeleccionarTodo definirAccion: [ checklistModel selectAll].
+
 bCompletar definirAccion: 
 [
 |nuevoUsuario| 
 (bibliotecasElegidas isNotNil & (campoNombre getText ~= '') & (campoApellido getText ~= '') & (campoDNI getText ~= '') & (campoPass getText ~= '')) 
 ifTrue: 
 	[ 
-	nuevoUsuario := Usuario crearConNombre: (campoNombre getText) apellido: (campoApellido getText) dni: ((campoDNI getText) asNumber) contraseña: (campoPass getText). nuevoUsuario setBibliotecasInteres: bibliotecasElegidas. 	(system agregarUsuario: nuevoUsuario) ifTrue: [bCompletar owner delete. self mensaje: 'Registro completado con éxito!' conAccion: [self vistaPrincipal]. ] ifFalse: [ self mensaje: 'Usuario ya existente.' ]
+	nuevoUsuario := UsuarioComun crearConNombre: (campoNombre getText) apellido: (campoApellido getText) dni: ((campoDNI getText) asNumber) contraseña: (campoPass getText). nuevoUsuario setBibliotecasInteres: bibliotecasElegidas. 	(system agregarUsuario: nuevoUsuario) ifTrue: [bCompletar owner delete. self mensaje: 'Registro completado con éxito!' conAccion: [self vistaPrincipal]. ] ifFalse: [ self mensaje: 'Usuario ya existente.' ]
 	] 
 ifFalse: 
 	[self error: 'Ha ocurrido un error, intenta de nuevo'.] 

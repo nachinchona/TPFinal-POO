@@ -11,7 +11,7 @@ Class {
 
 { #category : #accessing }
 Sistema class >> default [
-|libro1 libro2 libro3 libro4 bib1 bib2 user1 user2 admin pres1 pres2 col1 col2 colAllLibros colAllB colAllU sistema|
+|libro1 libro2 libro3 libro4 bib1 bib2 bib3 bib4 bib5 bib6 user1 colBUser1 colBUser2 user2 admin pres1 pres2 col1 col2 colAllLibros colAllB colAllU sistema|
 
 libro1 := Libro crearConNombre: 'A-01' editorial: 'Mian' anioEdicion: 2001 autores: 1.
 libro2 := Libro crearConNombre: 'B-45' editorial: 'Yuugami' anioEdicion: 2011 autores: 1.
@@ -21,16 +21,27 @@ libro4 := Libro crearConNombre: 'C-13' editorial: 'Mian' anioEdicion: 1968 autor
 colAllLibros := OrderedCollection new.
 colAllLibros add: libro1; add: libro2; add: libro3; add: libro4.
 
-bib1 := Biblioteca crearConId: 1 direccion: 'Anin 1' nombre: 'Jan 1' telefono: 23456 nombreRepresentante: 'Yo'.
-bib1 setColLibros: colAllLibros.
-bib2 := Biblioteca crearConId: 2 direccion: 'Unio 19' nombre: 'Yuugami 1' telefono: 12345 nombreRepresentante: 'Zo'.
-bib2 setColLibros: colAllLibros.
+bib1 := Biblioteca crearConId: 1 direccion: 'Irigoyen 280' nombre: 'Biblioteca Pública Provincial del Neuquén' telefono: 23456 nombreRepresentante: 'Yo'.
+bib1 setColLibros: (colAllLibros copyFrom: 1 to: 4).
+bib2 := Biblioteca crearConId: 2 direccion: 'Boulevard Francisco Arro 352' nombre: 'Biblioteca Pública de Carmen de Patagones' telefono: 12345 nombreRepresentante: 'Zo'.
+bib2 setColLibros: (colAllLibros copyFrom: 1 to: 4).
+bib3 := Biblioteca crearConId: 3 direccion: 'Dr. Mantero 318' nombre: 'Biblioteca Maestro Trombotto' telefono: 12345 nombreRepresentante: 'Zo'.
+bib3 setColLibros: (colAllLibros copyFrom: 1 to: 4).
+bib4 := Biblioteca crearConId: 4 direccion: 'Buenos Aires 131' nombre: 'Biblioteca Provincial 9 de Julio' telefono: 12345 nombreRepresentante: 'Zo'.
+bib4 setColLibros: (colAllLibros copyFrom: 1 to: 4).
+bib5 := Biblioteca crearConId: 5 direccion: 'Dr. Fleming 240' nombre: 'Biblioteca Ricardo Güiraldes' telefono: 12345 nombreRepresentante: 'Zo'.
+bib5 setColLibros: (colAllLibros copyFrom: 1 to: 4).
+bib6 := Biblioteca crearConId: 6 direccion: 'República Bolivariana de Venezuela 1538' nombre: 'Biblioteca Martín del Barco Centenera' telefono: 12345 nombreRepresentante: 'Zo'.
+bib6 setColLibros: (colAllLibros copyFrom: 1 to: 4).
 
 colAllB := OrderedCollection new.
-colAllB add: bib1; add: bib2.
+colAllB add: bib1; add: bib2; add: bib3; add: bib4; add: bib5; add: bib6.
 
-user1 := UsuarioComun crearConNombre: 'Ignacio' apellido: 'Navarro' dni: 44481878 contraseña: 'asd'.
-user2 := UsuarioPlus crearConNombre: 'Sebastián' apellido: 'Navarro' dni: 32124345 contraseña: 'zxc'.
+colBUser1 := OrderedCollection new. colBUser1 add: bib1; add: bib4; add: bib6.
+colBUser2 := OrderedCollection new. colBUser2 add: bib2; add: bib3; add: bib5.
+
+user1 := UsuarioComun crearConNombre: 'Ignacio' apellido: 'Navarro' dni: 44481878 contraseña: 'asd'. user1 setBibliotecasInteres: colBUser1  .
+user2 := UsuarioPlus crearConNombre: 'Sebastián' apellido: 'Navarro' dni: 32124345 contraseña: 'zxc'. user2 setBibliotecasInteres: colBUser2 .
 admin := Usuario crearConNombre: 'admin' apellido: 'admin' dni: 12345678 contraseña: 'admin'.
 
 colAllU := OrderedCollection new.

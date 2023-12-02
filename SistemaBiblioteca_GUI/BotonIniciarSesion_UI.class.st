@@ -35,7 +35,7 @@ ifTrue:
 ifFalse: 
 [
 	"es usuario comun"
-	((campoDNI getText ~= '') & (campoDNI asString isAllDigits) & (campoPass getText ~= ''))
+	((campoDNI getText ~= '')  & (campoDNI getText asString isAllDigits) & (campoPass getText ~= ''))
 	ifTrue: 
 	[ 
 		|tempUsuario|

@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+Ventana_UI class >> crearConMorph: unMorph [
+|ventana|
+ventana := self crearVentanaConAncho: unMorph width + 20 altura: unMorph height + 20.
+ventana addMorphCentered: unMorph . 
+^ ventana
+]
+
+{ #category : #'as yet unclassified' }
 Ventana_UI class >> crearVentanaConAncho: unAncho altura: unaAltura [
 |frame barra bCerrar|
 
