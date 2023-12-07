@@ -33,19 +33,19 @@ VistaPrincipal >> inicializarConSistema: unSistema [
 self asignarSistema: unSistema . 
 
 bienvenida := TextMorph new contents: 'Bienvenido a LIBRERÍAS I.A.! :)'.
-self añadirBoton: bienvenida conMargen: 40.
+self añadirMorph: bienvenida conMargen: 40.
 
 campoDNI := RubTextFieldMorph new extent: 300@20; ghostText: 'Ingrese su DNI'.
-self añadirBoton: campoDNI conMargen: 20.
+self añadirMorph: campoDNI conMargen: 20.
 
 campoPass := RubTextFieldMorph new extent: 300@20; ghostText: 'Ingrese su contraseña'.
-self añadirBoton: campoPass conMargen: 20.
+self añadirMorph: campoPass conMargen: 20.
 
 bIniciarSesion := (BotonIniciarSesion_UI new inicializarConSistema: self campoDNI: campoDNI campoPass: campoPass ).
-self añadirBoton: bIniciarSesion conMargen: 20.
+self añadirMorph: bIniciarSesion conMargen: 20.
 
 bRegistrar := (BotonRegistrar_UI new inicializarConSistema: self).
-self añadirBoton: bRegistrar conMargen: 20.
+self añadirMorph: bRegistrar conMargen: 20.
 
 self openCenteredInWorld .
 

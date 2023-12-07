@@ -100,6 +100,14 @@ Sistema >> getBibliotecas [
 ]
 
 { #category : #'as yet unclassified' }
+Sistema >> getPrestamosDeUsuario: unDni [
+|colTotal colAux|
+colTotal := OrderedCollection new.
+colBibliotecas do: [ :b | colAux := (b getPrestamosDeUsuario: unDni). colAux ifNotEmpty: [colTotal addAll: colAux] ].
+^ colTotal 
+]
+
+{ #category : #'as yet unclassified' }
 Sistema >> getUsuarios [
 ^ colUsuarios  
 ]
@@ -110,12 +118,14 @@ Sistema >> inicializarSistemaConColBibliotecas: colB colUsuarios: colU yColAutor
 colBibliotecas := colB.
 colAutores := colA.
 colUsuarios := colU.
+"
 controlDiario := 
 	[ Delay forSeconds: 86400.
 	colBibliotecas do: [ :b | presTemp := b getPrestamos. presTemp do: [ :p | (p fechaLimite = Date tomorrow) ifTrue: [ (colUsuarios detect: [ :u | u dni = p dni ]) multarConDias: 7]  ]  ]
 	] newProcess.
 controlDiario name: 'Control Prestamos'.
 controlDiario resume.
+"
 ]
 
 { #category : #'as yet unclassified' }

@@ -15,7 +15,7 @@ systemUI := unSistema.
 { #category : #'as yet unclassified' }
 BotonRegistrar_UI >> inicializarConSistema: unSistema [
 self asignarSistema: unSistema.
-self label: 'Registrar' font: (LogicalFont familyName: 'Roboto' pointSize: 14). 
+self label: 'Registrar' font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange. 
 ]
 
 { #category : #'event handling' }

@@ -60,13 +60,13 @@ Sistema_UI >> vistaAdmin [
 vista := self class crearVentanaConAncho: 300 altura: 300 titulo: 'ADMIN'.
 
 bienvenida := TextMorph new contents: 'Bienvenido/a admin! :)'.
-vista añadirBoton: bienvenida conMargen: 30.
+vista añadirMorph: bienvenida conMargen: 30.
 
 lista := BorderedMorph new extent: 280@180; color: Color darkGray; borderWidth: 1.
 lista addMorph: (TextMorph new contents: 'Usuarios:'; position: lista position + (10@0)).
 system getUsuarios do: [ :u | lista addMorphBack: (TextMorph new contents: (u dni) asString; position: lista lastSubmorph position + (0@20))].
 
-vista añadirBoton: lista conMargen: 20.
+vista añadirMorph: lista conMargen: 20.
 
 vista openCenteredInWorld .
 ]
@@ -87,24 +87,24 @@ Sistema_UI >> vistaRegistroOld [
 vista := self class crearVentanaConAncho:  400 altura: 600 titulo: 'ALTA DE NUEVO USUARIO'.
 "campos de ingreso de datos"
 campoNombre := RubTextFieldMorph new extent: 300@20; ghostText: 'Ingrese su nombre'.
-vista añadirBoton: campoNombre conMargen: 40.
+vista añadirMorph: campoNombre conMargen: 40.
 
 campoApellido := RubTextFieldMorph new extent: 300@20; ghostText: 'Ingrese su apellido'.
-vista añadirBoton: campoApellido conMargen: 20.
+vista añadirMorph: campoApellido conMargen: 20.
 
 campoDNI := RubTextFieldMorph new extent: 300@20; ghostText: 'Ingrese su DNI'.
-vista añadirBoton: campoDNI conMargen: 20.
+vista añadirMorph: campoDNI conMargen: 20.
 
 campoPass := RubTextFieldMorph new extent: 300@20; ghostText: 'Ingrese su contraseña'.
-vista añadirBoton: campoPass conMargen: 20.
+vista añadirMorph: campoPass conMargen: 20.
 
 "boton para efectivizar el registro con los datos de los campos"
 bCompletar := (BotonGenerico_UI new inicializarConSistema: system label: 'Registrar').
-vista añadirBoton: bCompletar conMargen: 20.
+vista añadirMorph: bCompletar conMargen: 20.
 
 "boton que invoca una checklist con bibliotecas"
 bElegir := BotonGenerico_UI new inicializarConSistema: system label: 'Elegir bibliotecas de interés'.
-vista añadirBoton: bElegir conMargen: 20.
+vista añadirMorph: bElegir conMargen: 20.
 
 "checklist para seleccionar bibliotecas de interes"
 bibliotecas := Dictionary new.
@@ -116,7 +116,7 @@ bElegir definirAccion: [ bibliotecasElegidas := (checklist choose) . bElegir des
 "morph para mostrar las bibliotecas seleccionadas (se agregan las seleccionadas despues de completar el checklist en bElegir)"
 bibliotecasElegidasMorph := BorderedMorph new extent: 370@200; color: Color darkGray; borderWidth: 1.
 bibliotecasElegidasMorph addMorph: (TextMorph new contents: 'Bibliotecas elegidas:'; position: bibliotecasElegidasMorph position + (10@0)).
-vista añadirBoton: bibliotecasElegidasMorph conMargen: 20.
+vista añadirMorph: bibliotecasElegidasMorph conMargen: 20.
 
 bCompletar definirAccion: 
 [
@@ -132,7 +132,7 @@ ifFalse:
 
 "boton atras que vuelve a la vista principal"
 bAtras := (BotonGenerico_UI new inicializarConSistema: system label: 'Atrás').
-vista añadirBoton: bAtras conMargen: 20.
+vista añadirMorph: bAtras conMargen: 20.
 
 bAtras definirAccion: [ bAtras owner delete. self vistaPrincipal ].
 

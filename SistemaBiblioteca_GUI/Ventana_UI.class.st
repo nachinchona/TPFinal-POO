@@ -12,6 +12,7 @@ Ventana_UI class >> crearConMorph: unMorph [
 |ventana|
 ventana := self crearVentanaConAncho: unMorph width + 20 altura: unMorph height + 20.
 ventana addMorphCentered: unMorph . 
+ventana openCenteredInWorld.
 ^ ventana
 ]
 
@@ -19,8 +20,8 @@ ventana addMorphCentered: unMorph .
 Ventana_UI class >> crearVentanaConAncho: unAncho altura: unaAltura [
 |frame barra bCerrar|
 
-frame := self new color: Color gray; extent: unAncho@unaAltura; borderColor: Color lightGray; borderWidth: 3.
-barra := self new color: Color gray; extent: unAncho@20; borderColor: Color lightGray; borderWidth: 3.
+frame := self new color: Color veryDarkGray ; extent: unAncho@unaAltura; borderColor: Color darkGray; borderWidth: 3.
+barra := self new color: Color veryDarkGray; extent: unAncho@20; borderColor: Color darkGray; borderWidth: 3.
 bCerrar := BotonCerrar_UI new inicializar.
 
 bCerrar position: frame topRight - bCerrar extent.
@@ -36,8 +37,8 @@ frame addMorph: bCerrar  inFrontOf: barra.
 Ventana_UI class >> crearVentanaConAncho: unAncho altura: unaAltura titulo: unTitulo [
 |frame barra titulo contenedorTitulo bCerrar|
 
-frame := self new color: Color gray; extent: unAncho@unaAltura; borderColor: Color lightGray; borderWidth: 3.
-barra := self new color: Color gray; extent: unAncho@20; borderColor: Color lightGray; borderWidth: 3.
+frame := self new color: Color veryDarkGray ; extent: unAncho@unaAltura; borderColor: Color darkGray; borderWidth: 3.
+barra := self new color: Color veryDarkGray; extent: unAncho@20; borderColor: Color darkGray; borderWidth: 3.
 contenedorTitulo := Morph new beTransparent; extent: unAncho@40.
 titulo := TextMorph new contents: (unTitulo asText allBold); fillsOwner: true.
 titulo font: (LogicalFont familyName: 'Roboto' pointSize: 20).
@@ -61,8 +62,16 @@ Ventana_UI >> añadirAccion: unaAccion [
 ]
 
 { #category : #'as yet unclassified' }
-Ventana_UI >> añadirBoton: unBoton conMargen: unMargen [
-unBoton position: (10@(self lastSubmorph bottom + unMargen)). self addMorphBack: unBoton. 
+Ventana_UI >> añadirMorph: unMorph alLadoDe: otroMorph [
+unMorph position: otroMorph position + (otroMorph width + 10@0).
+self addMorph: unMorph behind: otroMorph
+
+]
+
+{ #category : #'as yet unclassified' }
+Ventana_UI >> añadirMorph: unMorph conMargen: unMargen [
+unMorph position: (10@(self lastSubmorph bottom + unMargen)).
+self addMorphBack: unMorph. 
 ]
 
 { #category : #accessing }

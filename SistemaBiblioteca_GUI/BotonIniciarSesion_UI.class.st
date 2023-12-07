@@ -44,7 +44,7 @@ ifFalse:
 		ifNotNil: 
 		[
 			((tempUsuario contrasenia) asString = (campoPass getText) asString)		
-				ifTrue: [ self owner delete. systemUI vistaUsuario: (campoDNI getText) . ]
+				ifTrue: [ self owner delete. systemUI vistaUsuario: (campoDNI getText) asNumber . ]
 				ifFalse: [ systemUI error: 'Contraseña incorrecta.' ].
 		] 
 		ifNil: 

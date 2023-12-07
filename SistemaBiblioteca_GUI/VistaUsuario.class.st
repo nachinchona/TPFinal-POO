@@ -6,11 +6,16 @@ Class {
 		'modalidadMorph',
 		'bCambioModalidad',
 		'bMostrarBibInteres',
-		'listaBibModel',
-		'listaBib',
+		'pDataSource',
+		'pTabla',
+		'bRealizarPrestamo',
+		'bDevolverPrestamo',
+		'bDataSource',
+		'bTabla',
 		'bibliotecas',
 		'usuario',
-		'plus'
+		'plus',
+		'bCerrarSesion'
 	],
 	#category : #'SistemaBiblioteca_GUI'
 }
@@ -18,7 +23,7 @@ Class {
 { #category : #'as yet unclassified' }
 VistaUsuario class >> crearConSistema: unSistema usuario: unUsuario [
 |vista|
-vista := self crearVentanaConAncho:  450 altura: 350 titulo: 'LIBRERÍA NACIONAL I.A'.
+vista := self crearVentanaConAncho:  770 altura: 600 titulo: 'LIBRERÍA NACIONAL I.A'.
 vista inicializarConSistema: unSistema usuario: unUsuario.
 ^vista
 ]
@@ -31,27 +36,38 @@ usuario addDependent: self.
 plus := usuario esPlus .
 self asignarSistema: unSistema .
 
-bibliotecas := Dictionary new.
-(usuario bibliotecasInteres) do: [ :b | bibliotecas at: b nombre put: b ].
-listaBibModel := MorphTreeModel new rootItems: (bibliotecas keys).
-listaBibModel autoMultiSelection: true; headerLabel: 'Tus bibliotecas'.
-listaBib := listaBibModel defaultTreeMorph buildContents; vResizing: #spaceFill; hResizing:#spaceFill; extent: 370@120.
+bibliotecas := usuario bibliotecasInteres.
+
+bDataSource := BibliotecaDataSource elements: bibliotecas.
+bTabla := Tabla_UI crearBConDataSource: bDataSource ancho: 900 altura: 200.
 
 bienvenida := TextMorph new contents: 'Bienvenido/a ',usuario nombre,'! :)'.
-self añadirBoton: bienvenida conMargen: 20.
+self añadirMorph: bienvenida conMargen: 20.
 
-modalidadMorph := TextMorph new contents: ((usuario esPlus) ifTrue: [ 'Usted es usuario plus.' ] ifFalse: ['Usted es usuario común.']).
+modalidadMorph := TextMorph new contents: ((usuario esPlus) ifTrue: [ 'Usted es usuario plus.' ] ifFalse: [ 'Usted es usuario común.' ]).
 
-self añadirBoton: modalidadMorph conMargen: 20.
+self añadirMorph: modalidadMorph conMargen: 20.
 
 bCambioModalidad := (BotonGenerico_UI new inicializarConSistema: system label: 'Cambiar modalidad').
 bCambioModalidad definirAccion: [ usuario := usuario cambiarModalidad: unSistema. usuario addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.' ].
-self añadirBoton: bCambioModalidad conMargen: 20.
+self añadirMorph: bCambioModalidad conMargen: 20.
 
 bMostrarBibInteres := (BotonGenerico_UI new inicializarConSistema: system label: 'Mostrar mis bibliotecas de interés').
-bMostrarBibInteres definirAccion: [ (Ventana_UI crearConMorph: listaBib) openCenteredInWorld ].
-self añadirBoton: bMostrarBibInteres conMargen: 20.
+bMostrarBibInteres definirAccion: [ Ventana_UI crearConMorph: bTabla ].
+self añadirMorph: bMostrarBibInteres conMargen: 20.
 
+pDataSource := PrestamoDataSource elements: (system getPrestamosDeUsuario: unDni).
+
+pTabla := Tabla_UI crearPConDataSource: pDataSource ancho: 750 altura: 150 .
+self añadirMorph: pTabla conMargen: 20.
+
+bRealizarPrestamo := nil.
+
+bDevolverPrestamo := nil.
+
+bCerrarSesion := (BotonGenerico_UI new inicializarConSistema: system label: 'Cerrar sesión').
+bCerrarSesion definirAccion: [ self delete. self vistaPrincipal ].
+self añadirMorph: bCerrarSesion conMargen: 20.
 
 self openCenteredInWorld .
 

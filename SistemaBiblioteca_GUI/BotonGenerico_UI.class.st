@@ -26,10 +26,16 @@ self color: Color darkGray.
 ]
 
 { #category : #'as yet unclassified' }
+BotonGenerico_UI >> inicializarConAccion: unaAccion [
+habilitado := true.
+accion := unaAccion .
+]
+
+{ #category : #'as yet unclassified' }
 BotonGenerico_UI >> inicializarConSistema: unSistema label: unTexto [
 self asignarSistema: unSistema.
 habilitado := true.
-self label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 14). 
+self label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange. 
 ]
 
 { #category : #'event handling' }
