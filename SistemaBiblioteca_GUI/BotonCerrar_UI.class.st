@@ -1,28 +1,13 @@
 Class {
 	#name : #'BotonCerrar_UI',
-	#superclass : #SimpleButtonMorph,
-	#instVars : [
-		'accion'
-	],
+	#superclass : #'BotonGenerico_UI',
 	#category : #'SistemaBiblioteca_GUI'
 }
 
 { #category : #'as yet unclassified' }
-BotonCerrar_UI >> añadirAccion: unaAccion [
-accion := unaAccion .
-
-]
-
-{ #category : #'as yet unclassified' }
-BotonCerrar_UI >> inicializar [
+BotonCerrar_UI >> initialize [
+super initialize.
 self label: ('cerrar' asText allBold). self extent: 45@20; color: Color red; borderColor: Color darkGray ; borderWidth: 3.
-]
-
-{ #category : #'as yet unclassified' }
-BotonCerrar_UI >> inicializarConAccion: unaAccion [
-self inicializar.
-accion := unaAccion .
-
 ]
 
 { #category : #'as yet unclassified' }

@@ -1,6 +1,6 @@
 Class {
 	#name : #'BotonRegistrar_UI',
-	#superclass : #SimpleButtonMorph,
+	#superclass : #'BotonGenerico_UI',
 	#instVars : [
 		'systemUI'
 	],
@@ -15,13 +15,8 @@ systemUI := unSistema.
 { #category : #'as yet unclassified' }
 BotonRegistrar_UI >> inicializarConSistema: unSistema [
 self asignarSistema: unSistema.
-self label: 'Registrar' font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange. 
-]
-
-{ #category : #'event handling' }
-BotonRegistrar_UI >> mouseUp: anEvent [
-super mouseUp: anEvent.
-self registrar.
+self definirAccion: [ self registrar ].
+self textoBoton: 'Registrar'. 
 ]
 
 { #category : #'as yet unclassified' }

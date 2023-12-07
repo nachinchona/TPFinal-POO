@@ -39,6 +39,6 @@ PrestamoDataSource >> librosCellColumn: column row: rowIndex [
 boton := BotonGenerico_UI new.
 tabla := Tabla_UI crearLConDataSource: (LibroDataSource elements: ((elements at: rowIndex) libros)) ancho: 500 altura: 200.
 ^ FTCellMorph new
-		addMorphBack: (boton inicializarConAccion: [Ventana_UI crearConMorph: tabla]; label: 'Ver libros');
+		addMorphBack: (boton definirAccion: [Ventana_UI crearConMorph: tabla]; label: 'Ver libros';color: (Color r: 0.4 g: 0.8 b: 0.6));
 		yourself
 ]

@@ -1,5 +1,5 @@
 Class {
 	#name : #'BotonRegistrarPrestamo_UI',
-	#superclass : #SimpleButtonMorph,
+	#superclass : #'BotonGenerico_UI',
 	#category : #'SistemaBiblioteca_GUI'
 }

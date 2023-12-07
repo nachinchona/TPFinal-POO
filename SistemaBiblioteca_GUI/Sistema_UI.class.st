@@ -48,7 +48,7 @@ ventana openCenteredInWorld .
 Sistema_UI >> mensaje: unTexto conAccion: unaAccion [
 |ventana texto|
 ventana := self class crearVentanaConAncho: 200 altura: 100.
-ventana añadirAccion: unaAccion .
+ventana definirAccion: unaAccion .
 texto := TextMorph new contents: unTexto.
 ventana addMorphCentered: texto.
 ventana openCenteredInWorld .

@@ -2,17 +2,11 @@ Class {
 	#name : #'BotonGenerico_UI',
 	#superclass : #SimpleButtonMorph,
 	#instVars : [
-		'system',
 		'accion',
 		'habilitado'
 	],
 	#category : #'SistemaBiblioteca_GUI'
 }
-
-{ #category : #'as yet unclassified' }
-BotonGenerico_UI >> asignarSistema: unSistema [
-system := unSistema.
-]
 
 { #category : #'as yet unclassified' }
 BotonGenerico_UI >> definirAccion: unaAccion [
@@ -26,16 +20,21 @@ self color: Color darkGray.
 ]
 
 { #category : #'as yet unclassified' }
-BotonGenerico_UI >> inicializarConAccion: unaAccion [
+BotonGenerico_UI >> habilitar [
 habilitado := true.
-accion := unaAccion .
+self color: Color orange.
 ]
 
 { #category : #'as yet unclassified' }
-BotonGenerico_UI >> inicializarConSistema: unSistema label: unTexto [
-self asignarSistema: unSistema.
+BotonGenerico_UI >> inicializarConAccion: unaAccion [
+accion := unaAccion .
+]
+
+{ #category : #initialization }
+BotonGenerico_UI >> initialize [
+super initialize.
+self color: Color orange.
 habilitado := true.
-self label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange. 
 ]
 
 { #category : #'event handling' }
@@ -43,4 +42,9 @@ BotonGenerico_UI >> mouseUp: unEvento [
 super mouseUp: unEvento.
 habilitado ifTrue:
 [accion value. ].
+]
+
+{ #category : #'as yet unclassified' }
+BotonGenerico_UI >> textoBoton: unTexto [
+super label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange.
 ]

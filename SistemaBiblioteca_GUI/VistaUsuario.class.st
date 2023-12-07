@@ -48,12 +48,10 @@ modalidadMorph := TextMorph new contents: ((usuario esPlus) ifTrue: [ 'Usted es 
 
 self añadirMorph: modalidadMorph conMargen: 20.
 
-bCambioModalidad := (BotonGenerico_UI new inicializarConSistema: system label: 'Cambiar modalidad').
-bCambioModalidad definirAccion: [ usuario := usuario cambiarModalidad: unSistema. usuario addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.' ].
+bCambioModalidad := (BotonGenerico_UI new definirAccion: [ usuario := usuario cambiarModalidad: unSistema. usuario addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.' ]; textoBoton: 'Cambiar modalidad').
 self añadirMorph: bCambioModalidad conMargen: 20.
 
-bMostrarBibInteres := (BotonGenerico_UI new inicializarConSistema: system label: 'Mostrar mis bibliotecas de interés').
-bMostrarBibInteres definirAccion: [ Ventana_UI crearConMorph: bTabla ].
+bMostrarBibInteres := (BotonGenerico_UI new definirAccion: [ Ventana_UI crearConMorph: bTabla ]; textoBoton: 'Mostrar mis bibliotecas de interés').
 self añadirMorph: bMostrarBibInteres conMargen: 20.
 
 pDataSource := PrestamoDataSource elements: (system getPrestamosDeUsuario: unDni).
@@ -65,8 +63,7 @@ bRealizarPrestamo := nil.
 
 bDevolverPrestamo := nil.
 
-bCerrarSesion := (BotonGenerico_UI new inicializarConSistema: system label: 'Cerrar sesión').
-bCerrarSesion definirAccion: [ self delete. self vistaPrincipal ].
+bCerrarSesion := (BotonGenerico_UI new definirAccion: [ self delete. self vistaPrincipal ]; textoBoton: 'Cerrar sesión').
 self añadirMorph: bCerrarSesion conMargen: 20.
 
 self openCenteredInWorld .

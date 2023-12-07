@@ -46,7 +46,7 @@ campoPass := RubTextFieldMorph new extent: 800@20; ghostText: 'Ingrese su contra
 self añadirMorph: campoPass conMargen: 20.
 
 "boton para efectivizar el registro con los datos de los campos"
-bCompletar := (BotonGenerico_UI new inicializarConSistema: system label: 'Registrar').
+bCompletar := (BotonGenerico_UI new textoBoton: 'Registrar').
 self añadirMorph: bCompletar conMargen: 20.
 
 "tabla para seleccionar bibliotecas de interes"
@@ -56,16 +56,13 @@ tabla := Tabla_UI crearBConDataSource: dataSource ancho: 800 altura: 120.
 self añadirMorph: tabla conMargen: 20.
 
 "boton que agarra la seleccion del checklist para elegir bibliotecas"
-bElegir := BotonGenerico_UI new inicializarConSistema: system label: 'Elegir bibliotecas de interés'.
+bElegir := BotonGenerico_UI new definirAccion: [ bibliotecasElegidas := (tabla selectedIndexes) collect: [ :i | dataSource elementAt: i ]. tabla deselectAll. bElegir color: Color darkGray . bElegir definirAccion: [  ] ] ; textoBoton: 'Elegir bibliotecas de interés'.
 self añadirMorph: bElegir conMargen: 20.
-bElegir definirAccion: [ bibliotecasElegidas := (tabla selectedIndexes) collect: [ :i | dataSource elementAt: i ]. tabla deselectAll. bElegir color: Color darkGray . bElegir definirAccion: [  ] ].
-bAyuda := BotonGenerico_UI new inicializarConSistema: system label: '?'; color: Color blue; extent: 30@30.
-bAyuda definirAccion: [bAyuda showBalloon: 'Para elegir muchas bibliotecas, mantén apretada la tecla Ctrl y selecciona más bibliotecas :)']; helpText: 'Para elegir muchas bibliotecas, mantén apretada la tecla Ctrl y selecciona más bibliotecas :)'.
+bAyuda := BotonGenerico_UI new definirAccion: [bAyuda showBalloon: 'Para elegir muchas bibliotecas, mantén apretada la tecla Ctrl y selecciona más bibliotecas :)']; textoBoton: '?'; color: Color blue; extent: 30@30; helpText: 'Para elegir muchas bibliotecas, mantén apretada la tecla Ctrl y selecciona más bibliotecas :)'.
 self añadirMorph: bAyuda alLadoDe: bElegir.
 
-bSeleccionarTodo := BotonGenerico_UI new inicializarConSistema: system label: 'Seleccionar todas'.
+bSeleccionarTodo := BotonGenerico_UI new definirAccion: [ tabla selectAll. ]; textoBoton: 'Seleccionar todas'.
 self añadirMorph: bSeleccionarTodo conMargen: 20.
-bSeleccionarTodo definirAccion: [ tabla selectAll. ].
 
 bCompletar definirAccion: 
 [
@@ -80,7 +77,7 @@ ifFalse:
 ] .
 
 "boton atras que vuelve a la vista principal"
-bAtras := (BotonGenerico_UI new inicializarConSistema: system label: 'Atrás').
+bAtras := (BotonGenerico_UI new textoBoton: 'Atrás').
 self añadirMorph: bAtras conMargen: 20.
 bAtras definirAccion: [ bAtras owner delete. self vistaPrincipal ].
 

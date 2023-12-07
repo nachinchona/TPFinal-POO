@@ -1,6 +1,6 @@
 Class {
 	#name : #'BotonIniciarSesion_UI',
-	#superclass : #SimpleButtonMorph,
+	#superclass : #'BotonGenerico_UI',
 	#instVars : [
 		'systemUI',
 		'campoDNI',
@@ -19,7 +19,8 @@ BotonIniciarSesion_UI >> inicializarConSistema: unSistema campoDNI: unCampoDNI c
 campoDNI := unCampoDNI.
 campoPass := unCampoPass.
 self asignarSistema: unSistema.
-self label: 'Iniciar sesión' font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange.
+self definirAccion: [ self iniciarSesion ].
+self textoBoton: 'Iniciar sesión'.
 ]
 
 { #category : #'as yet unclassified' }
@@ -54,10 +55,4 @@ ifFalse:
 	[ systemUI error: 'Error: no ingresó correctamente en algún campo' ]
 ]
 
-]
-
-{ #category : #'event handling' }
-BotonIniciarSesion_UI >> mouseUp: anEvent [
-super mouseUp: anEvent.
-self iniciarSesion.
 ]
