@@ -4,6 +4,11 @@ Class {
 	#category : #'SistemaBiblioteca_GUI'
 }
 
+{ #category : #'instance creation' }
+PrestamoDataSource class >> elements: prestamos [
+^ super elements: prestamos
+]
+
 { #category : #accessing }
 PrestamoDataSource >> cellColumn: column row: row [
 (column id = 'ID') ifTrue: [ ^ self idCellColumn: column row: row ].
@@ -41,4 +46,10 @@ tabla := Tabla_UI crearLConDataSource: (LibroDataSource elements: ((elements at:
 ^ FTCellMorph new
 		addMorphBack: (boton definirAccion: [Ventana_UI crearConMorph: tabla]; label: 'Ver libros';color: (Color r: 0.4 g: 0.8 b: 0.6));
 		yourself
+]
+
+{ #category : #updating }
+PrestamoDataSource >> update: unPrestamo [
+elements remove: unPrestamo.
+self tableRefresh.
 ]

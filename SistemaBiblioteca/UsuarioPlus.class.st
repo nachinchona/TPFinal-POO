@@ -4,11 +4,6 @@ Class {
 	#category : #SistemaBiblioteca
 }
 
-{ #category : #initialization }
-UsuarioPlus class >> crearConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus [
-^ self crearConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: true
-]
-
 { #category : #'as yet unclassified' }
 UsuarioPlus >> cambiarModalidad: unSistema [
 |usuarioCambiado|

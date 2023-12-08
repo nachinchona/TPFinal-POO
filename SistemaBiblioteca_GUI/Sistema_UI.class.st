@@ -26,6 +26,11 @@ Sistema_UI >> getSistema [
 ^system
 ]
 
+{ #category : #initialization }
+Sistema_UI >> inicializarConSistema: unSistema [
+"metodo abstracto"
+]
+
 { #category : #'as yet unclassified' }
 Sistema_UI >> iniciarMenuPrincipalConSistema: unSistema [
 
@@ -47,9 +52,9 @@ ventana openCenteredInWorld .
 { #category : #'as yet unclassified' }
 Sistema_UI >> mensaje: unTexto conAccion: unaAccion [
 |ventana texto|
-ventana := self class crearVentanaConAncho: 200 altura: 100.
-ventana definirAccion: unaAccion .
 texto := TextMorph new contents: unTexto.
+ventana := self class crearVentanaConAncho: (texto width + 20) altura: (texto height + 20).
+ventana definirAccion: unaAccion .
 ventana addMorphCentered: texto.
 ventana openCenteredInWorld .
 ]
@@ -69,6 +74,11 @@ system getUsuarios do: [ :u | lista addMorphBack: (TextMorph new contents: (u dn
 vista añadirMorph: lista conMargen: 20.
 
 vista openCenteredInWorld .
+]
+
+{ #category : #'as yet unclassified' }
+Sistema_UI >> vistaPrestamo: unDni [
+^ VistaPrestamo crearConSistema: system usuario: unDni
 ]
 
 { #category : #'as yet unclassified' }

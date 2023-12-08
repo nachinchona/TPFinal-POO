@@ -56,12 +56,6 @@ frame addMorph: bCerrar  inFrontOf: barra.
 ]
 
 { #category : #'as yet unclassified' }
-Ventana_UI >> añadirAccion: unaAccion [
-"añade una accion al boton cerrar (volver entre ventanas)"
-(botones at: 1) definirAccion: unaAccion .
-]
-
-{ #category : #'as yet unclassified' }
 Ventana_UI >> añadirMorph: unMorph alLadoDe: otroMorph [
 unMorph position: otroMorph position + (otroMorph width + 10@0).
 self addMorph: unMorph behind: otroMorph
@@ -77,6 +71,12 @@ self addMorphBack: unMorph.
 { #category : #accessing }
 Ventana_UI >> botones [
 ^botones
+]
+
+{ #category : #'as yet unclassified' }
+Ventana_UI >> definirAccion: unaAccion [
+"añade una accion al boton cerrar (volver entre ventanas)"
+(botones at: 1) definirAccion: unaAccion .
 ]
 
 { #category : #'as yet unclassified' }

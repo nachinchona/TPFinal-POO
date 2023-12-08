@@ -83,7 +83,6 @@ bAtras definirAccion: [ bAtras owner delete. self vistaPrincipal ].
 
 self openCenteredInWorld .
 
-^self
 ]
 
 { #category : #initialization }

@@ -8,8 +8,7 @@ Class {
 		'contrasenia',
 		'multado',
 		'fechaLimite',
-		'bibInteres',
-		'modalidad'
+		'bibInteres'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -19,15 +18,6 @@ Usuario class >> crearConNombre: unNombre apellido: unApellido dni: unDni contra
 |unUsuario|
 unUsuario := self new.
 unUsuario inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña.
-^ unUsuario
-]
-
-{ #category : #initialization }
-Usuario class >> crearConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus [
-|unUsuario|
-unUsuario := self new.
-unUsuario inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus.
-
 ^ unUsuario
 ]
 
@@ -79,7 +69,7 @@ Usuario >> dni: anObject [
 
 { #category : #'as yet unclassified' }
 Usuario >> esPlus [
-^ modalidad 
+^ self subclassResponsibility  
 ]
 
 { #category : #'as yet unclassified' }
@@ -93,18 +83,6 @@ apellido := unApellido.
 nombre := unNombre.
 dni := unDni.
 contrasenia := unaContraseña.
-multado := false.
-
-
-]
-
-{ #category : #'as yet unclassified' }
-Usuario >> inicializarConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus [
-apellido := unApellido.
-nombre := unNombre.
-dni := unDni.
-contrasenia := unaContraseña.
-modalidad := esPlus .
 multado := false.
 
 

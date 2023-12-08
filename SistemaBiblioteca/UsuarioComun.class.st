@@ -4,11 +4,6 @@ Class {
 	#category : #SistemaBiblioteca
 }
 
-{ #category : #initialization }
-UsuarioComun class >> crearConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: esPlus [
-^ self crearConNombre: unNombre apellido: unApellido dni: unDni contraseña: unaContraseña modalidad: false
-]
-
 { #category : #'as yet unclassified' }
 UsuarioComun >> cambiarModalidad: unSistema [
 |usuarioCambiado|

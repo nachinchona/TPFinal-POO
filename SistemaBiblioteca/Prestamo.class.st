@@ -3,6 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'id',
+		'idBiblioteca',
 		'dniUsuario',
 		'fechaRealizacion',
 		'fechaLimite',
@@ -34,10 +35,16 @@ Prestamo >> id [
 	^ id
 ]
 
+{ #category : #accessing }
+Prestamo >> idBiblioteca [
+^ idBiblioteca 
+]
+
 { #category : #'as yet unclassified' }
-Prestamo >> inicializarPrestamoConId: unaId conLibros: unaColLibros deUsuario: unUsuario conDias: unaCantDias [
+Prestamo >> inicializarPrestamoConId: unaId conLibros: unaColLibros deUsuario: unUsuario conDias: unaCantDias enBib: otraId [
 id := unaId.
 libros := unaColLibros .
+idBiblioteca := otraId.
 dniUsuario := unUsuario dni.
 fechaRealizacion := Date today.
 fechaLimite := (fechaRealizacion addDays: unaCantDias).

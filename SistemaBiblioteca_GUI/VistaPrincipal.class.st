@@ -12,14 +12,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-VistaPrincipal class >> crear [
-|vista|
-vista := self crearVentanaConAncho:  450 altura: 350 titulo: 'LIBRERÍA NACIONAL I.A'.
-vista initialize.
-^ vista
-]
-
-{ #category : #'as yet unclassified' }
 VistaPrincipal class >> crearConSistema: unSistema [
 |vista|
 vista := self crearVentanaConAncho:  450 altura: 350 titulo: 'LIBRERÍA NACIONAL I.A'.
@@ -49,5 +41,4 @@ self añadirMorph: bRegistrar conMargen: 20.
 
 self openCenteredInWorld .
 
-^self
 ]

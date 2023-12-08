@@ -9,7 +9,8 @@ Class {
 		'nombreRepresentante',
 		'colLibros',
 		'colPrestamos',
-		'cantDiasPrestamo'
+		'cantDiasPrestamo',
+		'ultIdPrestamo'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -28,6 +29,14 @@ Biblioteca class >> crearConId: unId direccion: unaDireccion nombre: unNombre te
 unaBiblioteca := self new.
 unaBiblioteca inicializarConId:  unId direccion: unaDireccion nombre: unNombre telefono: unTelefono    nombreRepresentante: unNombreRepresentante cantDiasPrestamo: unK.
 ^unaBiblioteca
+]
+
+{ #category : #'as yet unclassified' }
+Biblioteca >> devolverPrestamo: unDni [
+|prestamo|
+prestamo := colPrestamos detect: [ :p | p dni = unDni ].
+colPrestamos remove: prestamo.
+self changed: prestamo.
 ]
 
 { #category : #accessing }
@@ -82,6 +91,7 @@ nombreRepresentante := unNombreRepresentante.
 colLibros := OrderedCollection new.
 colPrestamos := OrderedCollection new.
 cantDiasPrestamo := 7.
+ultIdPrestamo := 0.
 ]
 
 { #category : #'as yet unclassified' }
@@ -95,6 +105,7 @@ nombreRepresentante := unNombreRepresentante.
 colLibros := OrderedCollection new.
 colPrestamos := OrderedCollection new.
 cantDiasPrestamo := unK.
+ultIdPrestamo := 0.
 ]
 
 { #category : #accessing }
@@ -133,44 +144,54 @@ Biblioteca >> registrarPrestamoConLibros: unaColLibros deUsuario: unUsuario [
 "
 esPlus := unUsuario esPlus.
 colPlus := OrderedCollection new.
-(unUsuario estaMultado) ifFalse:
+(unUsuario estaMultado) ifTrue: [Transcript show: 1.^ false ]
+ifFalse:
 [ 
 colVerificada := OrderedCollection new.
-nuevaId := colPrestamos size + 1.
+ultIdPrestamo := ultIdPrestamo + 1.
+nuevaId := ((id)asString, '-', (ultIdPrestamo)asString)asString.
+
 "detecta si el Usuario tiene un préstamo activo en la colección de préstamos"
 tienePrestamo := (colPrestamos anySatisfy:  [ :xPrestamo | xPrestamo dni = unUsuario dni]).
-tienePrestamo ifFalse: 
+tienePrestamo ifTrue: [Transcript show: 2. ^ false ]
+ifFalse: 
 	[
 	cantLibros := unaColLibros size.
 	
-	(cantLibros > 0 & cantLibros <= 5)
-	ifTrue: (unaColLibros do: [ :unLibro |  (unLibro estaEnDeuda) 
-	ifFalse: [
-		(unLibro esAudioLibro)
-		ifTrue: [ 
-			esPlus 
-			ifTrue: [ colPlus add: unLibro ]
-			ifFalse: [ ^false ] ] 
-		ifFalse: [colVerificada add: unLibro. ]]. 
-	((colLibros includes: unLibro) & (unLibro estaEnDeuda)not) ifTrue: [unLibro marcarConDni: unUsuario ] ]).
-
+	(cantLibros > 0 & cantLibros <= 5) ifFalse: [Transcript show: 3. ^ false ]
+	ifTrue: 
+	[ unaColLibros do: [ :unLibro | (unLibro estaEnDeuda) 
+												ifFalse: [
+																(unLibro esAudioLibro)
+																ifTrue: [ 
+																			esPlus 
+																			ifTrue: [ colPlus add: unLibro ]
+																			ifFalse: [ Transcript show: 4.^ false ] ] 
+																ifFalse: [colVerificada add: unLibro. ].
+															]
+												ifTrue:  [Transcript show: 6.^ false].
+   ].
+											   
 	(colVerificada isEmpty) ifFalse: 
 		[
 		"Si la colección de libros verificada no es vacía, se crea el préstamo con los libros disponibles"	
 		unPrestamo := Prestamo new. 
-		unPrestamo inicializarPrestamoConId: nuevaId conLibros: colVerificada deUsuario: unUsuario conDias: cantDiasPrestamo.
+		unPrestamo inicializarPrestamoConId: nuevaId conLibros: colVerificada deUsuario: unUsuario conDias: cantDiasPrestamo enBib: id.
 		colPrestamos add: unPrestamo 
 		].
 	(colPlus isEmpty) ifFalse: 
 		[
 		"Si la colección de libros verificada plus no es vacía, se crea el préstamo con los libros disponibles"	
 		unPrestamo := Prestamo new. 
-		unPrestamo inicializarPrestamoConId: nuevaId conLibros: colPlus deUsuario: unUsuario conDias: (cantDiasPrestamo/2) ceiling .
+		unPrestamo inicializarPrestamoConId: nuevaId conLibros: colPlus deUsuario: unUsuario conDias: ((cantDiasPrestamo/2) ceiling) enBib: id.
 		colPrestamos add: unPrestamo 
-		]
-	] .	
+		].
+	]
+
+	]
 ] .
-^ (unPrestamo)
+
+^ true
 ]
 
 { #category : #initialization }

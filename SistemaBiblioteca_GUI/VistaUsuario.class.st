@@ -10,6 +10,7 @@ Class {
 		'pTabla',
 		'bRealizarPrestamo',
 		'bDevolverPrestamo',
+		'bAyuda',
 		'bDataSource',
 		'bTabla',
 		'bibliotecas',
@@ -21,15 +22,17 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-VistaUsuario class >> crearConSistema: unSistema usuario: unUsuario [
+VistaUsuario class >> crearConSistema: unSistema usuario: unDni [
 |vista|
 vista := self crearVentanaConAncho:  770 altura: 600 titulo: 'LIBRERÍA NACIONAL I.A'.
-vista inicializarConSistema: unSistema usuario: unUsuario.
-^vista
+vista inicializarConSistema: unSistema usuario: unDni.
+^ vista
 ]
 
 { #category : #'as yet unclassified' }
 VistaUsuario >> inicializarConSistema: unSistema usuario: unDni [
+
+|prestamosElegidos|
 
 usuario := (unSistema buscarUsuarioConDni: unDni).
 usuario addDependent: self.
@@ -59,16 +62,23 @@ pDataSource := PrestamoDataSource elements: (system getPrestamosDeUsuario: unDni
 pTabla := Tabla_UI crearPConDataSource: pDataSource ancho: 750 altura: 150 .
 self añadirMorph: pTabla conMargen: 20.
 
-bRealizarPrestamo := nil.
+bibliotecas do: [ :b | b addDependent: pDataSource ].
 
-bDevolverPrestamo := nil.
+bRealizarPrestamo := (BotonGenerico_UI new textoBoton: 'Realizar préstamo').
+bRealizarPrestamo definirAccion: [ self delete. self vistaPrestamo: unDni ].
+self añadirMorph: bRealizarPrestamo conMargen: 20.
+
+bDevolverPrestamo := (BotonGenerico_UI new textoBoton: 'Devolver préstamo'; definirAccion: [ prestamosElegidos := (pTabla selectedIndexes) collect: [:i | pDataSource elementAt: i]. prestamosElegidos do: [ :p | system devolverPrestamo: unDni deBib: (p idBiblioteca). ].  ]).
+self añadirMorph: bDevolverPrestamo conMargen: 20.
+
+bAyuda := BotonGenerico_UI new definirAccion: [bAyuda showBalloon: 'Para devolver muchos préstamos, mantén apretada la tecla Ctrl y selecciona más préstamos :)']; textoBoton: '?'; color: Color blue; extent: 30@30; helpText: 'Para devolver muchos préstamos, mantén apretada la tecla Ctrl y selecciona más préstamos :)'.
+self añadirMorph: bAyuda alLadoDe: bDevolverPrestamo.
 
 bCerrarSesion := (BotonGenerico_UI new definirAccion: [ self delete. self vistaPrincipal ]; textoBoton: 'Cerrar sesión').
 self añadirMorph: bCerrarSesion conMargen: 20.
 
 self openCenteredInWorld .
 
-^self
 ]
 
 { #category : #updating }
