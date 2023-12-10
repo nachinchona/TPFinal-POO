@@ -55,3 +55,10 @@ Prestamo >> libros [
 
 	^ libros
 ]
+
+{ #category : #'as yet unclassified' }
+Prestamo >> vencer [
+"metodo utilizado a modo de testeo"
+fechaRealizacion := fechaRealizacion subtractDays: 12.
+fechaLimite := fechaLimite subtractDays: 12.
+]

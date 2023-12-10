@@ -52,7 +52,7 @@ tabla secondarySelectionColor: tabla selectionColor.
 Tabla_UI class >> crearUConDataSource: unaDataSource ancho: unAncho altura: unaAltura [
 |tabla|
 tabla := self new extent: unAncho@unaAltura;
-addColumn: (FTColumn id: 'DNI'); addColumn: (FTColumn id: 'Nombre'); addColumn: (FTColumn id: 'Apellido');
+addColumn: (FTColumn id: 'DNI'); addColumn: (FTColumn id: 'Nombre'); addColumn: (FTColumn id: 'Apellido'); addColumn: (FTColumn id: 'Multado'); addColumn: (FTColumn id: 'Bib. interés'); addColumn: (FTColumn id: 'Préstamos');
 dataSource: unaDataSource;
 		beMultipleSelection;
 		beResizable;

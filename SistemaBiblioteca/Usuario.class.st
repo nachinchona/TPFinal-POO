@@ -8,7 +8,8 @@ Class {
 		'contrasenia',
 		'multado',
 		'fechaLimite',
-		'bibInteres'
+		'bibInteres',
+		'estaAlDiaConCuota'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -72,6 +73,11 @@ Usuario >> esPlus [
 ^ self subclassResponsibility  
 ]
 
+{ #category : #accessing }
+Usuario >> estaAlDiaConCuota [
+^estaAlDiaConCuota
+]
+
 { #category : #'as yet unclassified' }
 Usuario >> estaMultado [
 ^ multado 
@@ -84,6 +90,7 @@ nombre := unNombre.
 dni := unDni.
 contrasenia := unaContraseña.
 multado := false.
+estaAlDiaConCuota := false.
 
 
 ]
@@ -109,6 +116,11 @@ Usuario >> nombre [
 Usuario >> nombre: anObject [
 
 	nombre := anObject
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> pagarCuota [
+estaAlDiaConCuota := true.
 ]
 
 { #category : #initialization }

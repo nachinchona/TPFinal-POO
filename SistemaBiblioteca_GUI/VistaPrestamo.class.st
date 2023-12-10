@@ -58,7 +58,7 @@ librosElegidos := OrderedCollection new.
 
 bElegirLibros := BotonGenerico_UI new textoBoton: 'Elegir libros'.
 self añadirMorph: bElegirLibros conMargen: 20.
-bElegirLibros definirAccion: [ librosElegidos := (lTabla selectedIndexes) collect: [ :i | lDataSource elementAt: i ]. bElegirLibros color: Color darkGray . lTabla deselectAll. bElegirLibros definirAccion: [  ]  ].
+bElegirLibros definirAccion: [ librosElegidos := (lTabla selectedIndexes) collect: [ :i | lDataSource elementAt: i ]. lTabla deselectAll. bElegirLibros deshabilitar  ].
 
 bCompletar := BotonGenerico_UI new textoBoton: 'Completar'.
 self añadirMorph: bCompletar conMargen: 20.

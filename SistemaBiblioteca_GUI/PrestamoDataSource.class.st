@@ -49,7 +49,8 @@ tabla := Tabla_UI crearLConDataSource: (LibroDataSource elements: ((elements at:
 ]
 
 { #category : #updating }
-PrestamoDataSource >> update: unPrestamo [
-elements remove: unPrestamo.
+PrestamoDataSource >> update: unCambio [
+((unCambio at: 1) = 1) ifTrue: [ elements remove: (unCambio at: 2). ].
+((unCambio at: 1) = 2) ifTrue: [ elements add: (unCambio at: 2). ].
 self tableRefresh.
 ]

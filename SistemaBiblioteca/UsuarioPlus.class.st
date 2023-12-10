@@ -13,6 +13,7 @@ usuarioCambiado := UsuarioComun crearConNombre: nombre apellido: apellido dni: d
 "no hay errores en esta fase (no chequeo si devuelven true o false)"
 (unSistema eliminarUsuario: (self dni)).
 (unSistema agregarUsuario: usuarioCambiado).
+usuarioCambiado setBibliotecasInteres: (self bibliotecasInteres).
 
 self changed.
 

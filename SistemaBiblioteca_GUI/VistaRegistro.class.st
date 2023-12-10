@@ -56,7 +56,7 @@ tabla := Tabla_UI crearBConDataSource: dataSource ancho: 800 altura: 120.
 self añadirMorph: tabla conMargen: 20.
 
 "boton que agarra la seleccion del checklist para elegir bibliotecas"
-bElegir := BotonGenerico_UI new definirAccion: [ bibliotecasElegidas := (tabla selectedIndexes) collect: [ :i | dataSource elementAt: i ]. tabla deselectAll. bElegir color: Color darkGray . bElegir definirAccion: [  ] ] ; textoBoton: 'Elegir bibliotecas de interés'.
+bElegir := BotonGenerico_UI new definirAccion: [ bibliotecasElegidas := (tabla selectedIndexes) collect: [ :i | dataSource elementAt: i ]. tabla deselectAll. bElegir deshabilitar ] ; textoBoton: 'Elegir bibliotecas de interés'.
 self añadirMorph: bElegir conMargen: 20.
 bAyuda := BotonGenerico_UI new definirAccion: [bAyuda showBalloon: 'Para elegir muchas bibliotecas, mantén apretada la tecla Ctrl y selecciona más bibliotecas :)']; textoBoton: '?'; color: Color blue; extent: 30@30; helpText: 'Para elegir muchas bibliotecas, mantén apretada la tecla Ctrl y selecciona más bibliotecas :)'.
 self añadirMorph: bAyuda alLadoDe: bElegir.

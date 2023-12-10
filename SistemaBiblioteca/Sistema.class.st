@@ -4,14 +4,15 @@ Class {
 	#instVars : [
 		'colBibliotecas',
 		'colUsuarios',
-		'colAutores'
+		'colAutores',
+		'cantDiasMulta'
 	],
 	#category : #SistemaBiblioteca
 }
 
 { #category : #accessing }
 Sistema class >> default [
-|libro1 libro2 libro3 libro4 libro5 libro6 bib1 bib2 bib3 bib4 bib5 bib6 user1 colBUser1 colBUser2 user2 admin col1 col2 col3 colAllLibros colAllB colAllU sistema|
+|libro1 libro2 libro3 libro4 libro5 libro6 bib1 bib2 bib3 bib4 bib5 bib6 user1 colBUser1 colBUser2 user2 user3 col1 col2 col3 colAllLibros colAllB colAllU sistema|
 
 libro1 := Libro crearConNombre: 'A-01' editorial: 'Mian' anioEdicion: 2001 autores: 1.
 libro2 := Libro crearConNombre: 'B-45' editorial: 'Yuugami' anioEdicion: 2011 autores: 1.
@@ -44,10 +45,10 @@ colBUser2 := OrderedCollection new. colBUser2 add: bib1; add: bib2; add: bib3; a
 
 user1 := UsuarioComun crearConNombre: 'Ignacio' apellido: 'Navarro' dni: 44481878 contraseña: 'asd'. user1 setBibliotecasInteres: colBUser1  .
 user2 := UsuarioPlus crearConNombre: 'Sebastián' apellido: 'Navarro' dni: 32123456 contraseña: 'zxc'. user2 setBibliotecasInteres: colBUser2 .
-admin := Usuario crearConNombre: 'admin' apellido: 'admin' dni: 12345678 contraseña: 'admin'.
+user3 := UsuarioComun crearConNombre: 'Pepe' apellido: 'Mujica' dni: 12345678 contraseña: 'asd'. user3 setBibliotecasInteres: colAllB  .
 
 colAllU := OrderedCollection new.
-colAllU add: user1; add: user2; add: admin.
+colAllU add: user1; add: user2; add: user3.
 
 col1 := OrderedCollection new. 
 col1 add: libro1; add: libro4.
@@ -61,9 +62,11 @@ col3 add: libro5; add: libro6.
 bib1 registrarPrestamoConLibros: col1 deUsuario: user1.
 bib4 registrarPrestamoConLibros: col3 deUsuario: user1.
 bib1 registrarPrestamoConLibros: col2 deUsuario: user2.
+bib5 registrarPrestamoConLibros: col2 deUsuario: user3.
+bib3 registrarPrestamoVencidoConLibros: col3 deUsuario: user3.
 
 sistema := self new.
-sistema inicializarSistemaConColBibliotecas: colAllB colUsuarios: colAllU yColAutores: 1.
+sistema inicializarSistemaConColBibliotecas: colAllB colUsuarios: colAllU colAutores: 1 cantDiasMulta: 7.
 
 ^ sistema
 ]
@@ -87,6 +90,11 @@ Sistema >> buscarBibliotecaConId: unaId [
 { #category : #'as yet unclassified' }
 Sistema >> buscarUsuarioConDni: unDni [
 ^ colUsuarios detect: [ :u | u dni = unDni asNumber] ifNone: [ nil ].
+]
+
+{ #category : #accessing }
+Sistema >> cantDiasMulta [
+^ cantDiasMulta
 ]
 
 { #category : #'as yet unclassified' }
@@ -115,7 +123,7 @@ Sistema >> getBibliotecas [
 Sistema >> getPrestamosDeUsuario: unDni [
 |colTotal colAux|
 colTotal := OrderedCollection new.
-colBibliotecas do: [ :b | colAux := (b getPrestamosDeUsuario: unDni). colAux ifNotEmpty: [colTotal addAll: colAux] ].
+colBibliotecas do: [ :b | colAux := (b getPrestamosDeUsuario: unDni). colAux ifNotEmpty: [colTotal addAll: colAux]. ].
 ^ colTotal 
 ]
 
@@ -125,11 +133,12 @@ Sistema >> getUsuarios [
 ]
 
 { #category : #'as yet unclassified' }
-Sistema >> inicializarSistemaConColBibliotecas: colB colUsuarios: colU yColAutores: colA [
+Sistema >> inicializarSistemaConColBibliotecas: colB colUsuarios: colU colAutores: colA cantDiasMulta: unK [
 |controlDiario presTemp|
 colBibliotecas := colB.
 colAutores := colA.
 colUsuarios := colU.
+cantDiasMulta := unK.
 "
 controlDiario := 
 	[ Delay forSeconds: 86400.
@@ -145,4 +154,12 @@ Sistema >> obtenerIDBibliotecaSiguiente [
 |idRetorno|
 colBibliotecas ifNil: [ idRetorno := 1 ] ifNotNil: [ idRetorno := colBibliotecas size + 1 ].
 ^ idRetorno 
+]
+
+{ #category : #'as yet unclassified' }
+Sistema >> verificarMulta: unDni [
+|col retorno|
+col := (self getPrestamosDeUsuario: unDni).
+retorno := (col anySatisfy: [ :p | (p fechaLimite) isBefore: (Date today) ]).
+^ retorno
 ]

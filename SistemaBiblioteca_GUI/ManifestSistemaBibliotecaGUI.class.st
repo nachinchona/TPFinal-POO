@@ -8,10 +8,24 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestSistemaBibliotecaGUI class >> ruleGuardingClauseRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGPackageDefinition #(#SistemaBiblioteca_GUI)) #'2023-12-10T14:48:06.372-03:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestSistemaBibliotecaGUI class >> ruleLongMethodsRuleV1FalsePositive [
 
 	<ignoreForCoverage>
 	^ #(#(#(#RGPackageDefinition #(#SistemaBiblioteca_GUI)) #'2023-11-30T20:28:22.487-03:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestSistemaBibliotecaGUI class >> ruleReGuardClauseRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGPackageDefinition #(#SistemaBiblioteca_GUI)) #'2023-12-10T14:48:04.346-03:00') )
 ]
 
 { #category : #'code-critics' }
