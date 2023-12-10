@@ -28,6 +28,7 @@ Biblioteca >> devolverPrestamo: unDni [
 |prestamo|
 prestamo := colPrestamos detect: [ :p | p dni = unDni ].
 colPrestamos remove: prestamo.
+prestamo libros do: [ :l | l desmarcar ].
 self changed: {1. prestamo.}.
 ]
 
@@ -41,11 +42,6 @@ Biblioteca >> direccion [
 Biblioteca >> direccion: anObject [
 
 	direccion := anObject
-]
-
-{ #category : #'as yet unclassified' }
-Biblioteca >> getColLibros [
-^ colLibros
 ]
 
 { #category : #'as yet unclassified' }
@@ -84,6 +80,11 @@ colLibros := OrderedCollection new.
 colPrestamos := OrderedCollection new.
 cantDiasPrestamo := 7.
 ultIdPrestamo := 0.
+]
+
+{ #category : #'as yet unclassified' }
+Biblioteca >> libros [
+^ colLibros
 ]
 
 { #category : #accessing }
@@ -143,9 +144,9 @@ ifFalse:
 																(unLibro esAudioLibro)
 																ifTrue: [ 
 																			esPlus 
-																			ifTrue: [ colPlus add: unLibro ]
+																			ifTrue: [ colPlus add: unLibro. unLibro marcarConDni: unUsuario dni ]
 																			ifFalse: [ Transcript show: 4.^ false ] ] 
-																ifFalse: [ colVerificada add: unLibro. ].
+																ifFalse: [ colVerificada add: unLibro. unLibro marcarConDni: unUsuario dni].
 															]
 												ifTrue:  [Transcript show: 6.^ false].
    ].

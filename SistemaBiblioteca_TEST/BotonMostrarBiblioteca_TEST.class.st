@@ -36,7 +36,7 @@ colInfo añadirFilaCon: 'Dirección: ', (unaBiblioteca direccion).
 colInfo añadirFilaCon: 'Teléfono:  ', (unaBiblioteca telefono) asString.
 
 colLibros añadirFilaCon: (('INFORMACIÓN DE SUS LIBROS (nombre, año, autores, editorial, esAudioLibro, estaEnDeuda)' asText) allBold).
-coleccionLibros := unaBiblioteca getColLibros.
+coleccionLibros := unaBiblioteca libros.
 coleccionLibros do: [ :l | colLibros añadirFilaCon: (l nombre) asString,', ',(l anioEdicion) asString,', ', (l autores) asString,', ', (l editorial) asString,', ', (l esAudioLibro) asString,', ', (l estaEnDeuda) asString  ].
 
 ventana addMorph: colInfo.

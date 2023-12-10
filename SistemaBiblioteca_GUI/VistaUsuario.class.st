@@ -5,6 +5,7 @@ Class {
 		'bienvenida',
 		'modalidadMorph',
 		'bCambioModalidad',
+		'bPagar',
 		'bMostrarBibInteres',
 		'pDataSource',
 		'pTabla',
@@ -52,8 +53,11 @@ modalidadMorph := TextMorph new contents: ((usuario esPlus) ifTrue: [ 'Usted es 
 
 self añadirMorph: modalidadMorph conMargen: 20.
 
-bCambioModalidad := (BotonGenerico_UI new definirAccion: [ usuario := usuario cambiarModalidad: unSistema. usuario addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.' ]; textoBoton: 'Cambiar modalidad').
+bCambioModalidad := BotonGenerico_UI new textoBoton: 'Cambiar modalidad'; definirAccion: [ |usuarioCambiado| usuarioCambiado := (usuario cambiarModalidad: unSistema). (usuarioCambiado = usuario) ifFalse: [usuario addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.'] ifTrue: [self error: 'Usted no realizó ningún pago: no puede mejorar su modalidad']].
 self añadirMorph: bCambioModalidad conMargen: 20.
+
+bPagar := (BotonGenerico_UI new definirAccion: [ (usuario estaAlDiaConCuota) ifTrue: [ self mensaje: 'Usted ya pagó su cuota anteriormente.' ] ifFalse: [ usuario pagarCuota. self mensaje: 'Usted ha pagado su cuota correctamente.' ] ]; textoBoton: 'Pagar cuota'; color: Color red).
+self añadirMorph: bPagar alLadoDe: bCambioModalidad.
 
 bMostrarBibInteres := (BotonGenerico_UI new definirAccion: [ Ventana_UI crearConMorph: bTabla ]; textoBoton: 'Mostrar mis bibliotecas de interés').
 self añadirMorph: bMostrarBibInteres conMargen: 20.

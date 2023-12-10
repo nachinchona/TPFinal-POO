@@ -47,7 +47,7 @@ self añadirMorph: bElegirBiblioteca conMargen: 20.
 bElegirBiblioteca definirAccion:
 [
 bibliotecaElegida := bDataSource elementAt: (bTabla selectedIndex).
-lDataSource := LibroDataSource elements: bibliotecaElegida getColLibros.
+lDataSource := LibroDataSource elements: bibliotecaElegida libros.
 lTabla := Tabla_UI crearLConDataSource: lDataSource ancho: 830 altura: 150.
 self replaceSubmorph: cajaNegra by: lTabla.
 ].

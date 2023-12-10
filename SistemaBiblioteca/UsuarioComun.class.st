@@ -10,10 +10,15 @@ UsuarioComun >> cambiarModalidad: unSistema [
 
 usuarioCambiado := UsuarioPlus crearConNombre: nombre apellido: apellido dni: dni contraseña: contrasenia .
 
-"no hay errores en esta fase (no chequeo si devuelven true o false)"
+(self estaAlDiaConCuota) ifTrue: 
+[  
 (unSistema eliminarUsuario: (self dni)).
 (unSistema agregarUsuario: usuarioCambiado).
 usuarioCambiado setBibliotecasInteres: (self bibliotecasInteres).
+] ifFalse:
+[
+^ self
+].
 
 self changed.
 
