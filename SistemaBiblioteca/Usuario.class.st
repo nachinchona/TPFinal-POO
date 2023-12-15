@@ -70,6 +70,7 @@ Usuario >> dni: anObject [
 
 { #category : #'as yet unclassified' }
 Usuario >> esPlus [
+"se pretende crear usuarios de acuerdo a sus subclases"
 ^ self subclassResponsibility  
 ]
 
@@ -104,6 +105,12 @@ multado := true.
 Usuario >> multarConDias: cantDias [
 multado := true.
 fechaLimite := (Date today) addDays: cantDias.
+]
+
+{ #category : #'instance creation' }
+Usuario >> new [
+"es abstracta, no se pueden crear instancias de Usuario (igual, esto no funciona)"
+^ self subclassResponsibility.
 ]
 
 { #category : #accessing }

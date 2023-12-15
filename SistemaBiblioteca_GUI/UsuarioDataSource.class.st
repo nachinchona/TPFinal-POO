@@ -17,6 +17,16 @@ unaDS asignarSistema: unSistema .
 ]
 
 { #category : #'as yet unclassified' }
+UsuarioDataSource class >> elements: unaCol conSistema: unSistema [
+|ds|
+ds := super elements: unaCol.
+ds asignarSistema: unSistema.
+
+^ ds
+
+]
+
+{ #category : #'as yet unclassified' }
 UsuarioDataSource >> apellidoCellColumn: column row: rowIndex [
 ^ FTCellMorph new
 		addMorphBack: ((elements at: rowIndex) apellido) asStringMorph;

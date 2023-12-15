@@ -87,7 +87,7 @@ self añadirMorph: bCerrarSesion conMargen: 20.
 
 self openCenteredInWorld .
 
-(system verificarMulta: unDni) ifTrue: [ self error: 'Algún préstamo no fue devuelto a tiempo. Se le aplicó una suspensión de ',(system cantDiasMulta) asString, ' días: no podrá realizar préstamos durante ese período.'. bRealizarPrestamo deshabilitar ].
+(system verificarMulta: unDni) ifNotNil: [ self error: 'Algún préstamo no fue devuelto a tiempo. Se le aplicó una suspensión de ',(system cantDiasMulta) asString, ' días: no podrá realizar préstamos durante ese período.'. bRealizarPrestamo deshabilitar ].
 ]
 
 { #category : #updating }

@@ -24,9 +24,27 @@ columnas := (tabla columns).
 
 { #category : #'as yet unclassified' }
 Tabla_UI class >> crearLConDataSource: unaDataSource ancho: unAncho altura: unaAltura [
-|tabla|
+|tabla columnas|
 tabla := self new extent: unAncho@unaAltura;
 addColumn: (FTColumn id: 'Nombre'); addColumn: (FTColumn id: 'Editorial'); addColumn: (FTColumn id: 'Año de publicación'); addColumn: (FTColumn id: 'Autores');
+dataSource: unaDataSource;
+		beMultipleSelection;
+		beResizable;
+		yourself.
+tabla secondarySelectionColor: tabla selectionColor.
+columnas := tabla columns.
+
+(columnas at: 1) width: 220.
+(columnas at: 2) width: 170.
+(columnas at: 3) width: 110.
+^ tabla 
+]
+
+{ #category : #'as yet unclassified' }
+Tabla_UI class >> crearPConDataSource: unaDataSource ancho: unAncho altura: unaAltura [
+|tabla|
+tabla := self new extent: unAncho@unaAltura;
+addColumn: (FTColumn id: 'ID'); addColumn: (FTColumn id: 'Fecha de realización'); addColumn: (FTColumn id: 'Fecha límite'); addColumn: (FTColumn id: 'Libros');
 dataSource: unaDataSource;
 		beMultipleSelection;
 		beResizable;
@@ -36,10 +54,11 @@ tabla secondarySelectionColor: tabla selectionColor.
 ]
 
 { #category : #'as yet unclassified' }
-Tabla_UI class >> crearPConDataSource: unaDataSource ancho: unAncho altura: unaAltura [
+Tabla_UI class >> crearUConDataSource2: unaDataSource ancho: unAncho altura: unaAltura [
 |tabla|
+"tabla para usuarios atrasados"
 tabla := self new extent: unAncho@unaAltura;
-addColumn: (FTColumn id: 'ID'); addColumn: (FTColumn id: 'Fecha de realización'); addColumn: (FTColumn id: 'Fecha límite'); addColumn: (FTColumn id: 'Libros');
+addColumn: (FTColumn id: 'DNI'); addColumn: (FTColumn id: 'Nombre'); addColumn: (FTColumn id: 'Apellido'); addColumn: (FTColumn id: 'Multado'); addColumn: (FTColumn id: 'Biblioteca en la que adeuda');
 dataSource: unaDataSource;
 		beMultipleSelection;
 		beResizable;

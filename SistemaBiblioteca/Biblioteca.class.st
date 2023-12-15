@@ -24,12 +24,19 @@ unaBiblioteca inicializarConId:  unId direccion: unaDireccion nombre: unNombre t
 ]
 
 { #category : #'as yet unclassified' }
+Biblioteca >> añadirLibro: unLibro [
+colLibros add: unLibro.
+self changed.
+^ true
+]
+
+{ #category : #'as yet unclassified' }
 Biblioteca >> devolverPrestamo: unDni [
 |prestamo|
 prestamo := colPrestamos detect: [ :p | p dni = unDni ].
 colPrestamos remove: prestamo.
 prestamo libros do: [ :l | l desmarcar ].
-self changed: {1. prestamo.}.
+self changed: {2. prestamo.}.
 ]
 
 { #category : #accessing }
@@ -112,6 +119,14 @@ Biblioteca >> nombreRepresentante: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+Biblioteca >> quitarLibro: unLibro [
+colLibros remove: unLibro .
+self changed.
+^ true
+
+]
+
+{ #category : #'as yet unclassified' }
 Biblioteca >> registrarPrestamoConLibros: unaColLibros deUsuario: unUsuario [
 |unPrestamo cantLibros tienePrestamo nuevaId colVerificada colPlus esPlus|
 "chequeos:
@@ -123,7 +138,7 @@ Biblioteca >> registrarPrestamoConLibros: unaColLibros deUsuario: unUsuario [
 "
 esPlus := unUsuario esPlus.
 colPlus := OrderedCollection new.
-(unUsuario estaMultado) ifTrue: [Transcript show: 1.^ false ]
+(unUsuario estaMultado) ifTrue: [^ false ]
 ifFalse:
 [ 
 colVerificada := OrderedCollection new.
@@ -132,12 +147,12 @@ nuevaId := ((id)asString, '-', (ultIdPrestamo)asString)asString.
 
 "detecta si el Usuario tiene un préstamo activo en la colección de préstamos"
 tienePrestamo := (colPrestamos anySatisfy:  [ :xPrestamo | xPrestamo dni = unUsuario dni]).
-tienePrestamo ifTrue: [Transcript show: 2. ^ false ]
+tienePrestamo ifTrue: [^ false ]
 ifFalse: 
 	[
 	cantLibros := unaColLibros size.
 	
-	(cantLibros > 0 & cantLibros <= 5) ifFalse: [Transcript show: 3. ^ false ]
+	(cantLibros > 0 & cantLibros <= 5) ifFalse: [^ false ]
 	ifTrue: 
 	[ unaColLibros do: [ :unLibro | (unLibro estaEnDeuda) 
 												ifFalse: [
@@ -145,10 +160,10 @@ ifFalse:
 																ifTrue: [ 
 																			esPlus 
 																			ifTrue: [ colPlus add: unLibro. unLibro marcarConDni: unUsuario dni ]
-																			ifFalse: [ Transcript show: 4.^ false ] ] 
+																			ifFalse: [ ^ false ] ] 
 																ifFalse: [ colVerificada add: unLibro. unLibro marcarConDni: unUsuario dni].
 															]
-												ifTrue:  [Transcript show: 6.^ false].
+												ifTrue:  [^ false].
    ].
 											   
 	(colVerificada isEmpty) ifFalse: 
@@ -170,7 +185,9 @@ ifFalse:
 	]
 ] .
 
-"devuelve un arreglo dinamico con 1. la operacion realizada (1 adicion 2 removicion) y el prestamo en cuestion"
+"
+devuelve un arreglo dinamico con 1. la operacion realizada (1 adicion 2 removicion) y el prestamo en cuestion.
+"
 self changed: {1. unPrestamo.}.
 
 ^ true
@@ -266,9 +283,4 @@ Biblioteca >> telefono [
 Biblioteca >> telefono: anObject [
 
 	telefono := anObject
-]
-
-{ #category : #printing }
-Biblioteca >> toString [
-^ (id asString),' / ',direccion,' / ',nombre,' / ',(telefono asString),' / ',nombreRepresentante
 ]
