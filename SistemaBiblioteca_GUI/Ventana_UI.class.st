@@ -35,12 +35,11 @@ frame addMorph: bCerrar  inFrontOf: barra.
 
 { #category : #'as yet unclassified' }
 Ventana_UI class >> crearVentanaConAncho: unAncho altura: unaAltura titulo: unTitulo [
-|frame barra titulo contenedorTitulo bCerrar|
+|frame barra titulo bCerrar|
 
 frame := self new color: Color veryDarkGray ; extent: unAncho@unaAltura; borderColor: Color darkGray; borderWidth: 3.
 
 barra := self new color: Color veryDarkGray; extent: unAncho@20; borderColor: Color darkGray; borderWidth: 3.
-contenedorTitulo := Morph new beTransparent; extent: unAncho@40.
 titulo := TextMorph new contents: (unTitulo asText allBold); fillsOwner: true.
 titulo font: (LogicalFont familyName: 'Roboto' pointSize: 20).
 

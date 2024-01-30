@@ -59,7 +59,7 @@ Biblioteca >> getPrestamos [
 { #category : #'as yet unclassified' }
 Biblioteca >> getPrestamosDeUsuario: unDni [
 |colRetorno|
-colRetorno := colPrestamos select: [ :p | p dni = unDni].
+colRetorno := colPrestamos select: [ :p | p esDeUsuario: unDni].
 ^ colRetorno 
 ]
 

@@ -46,5 +46,5 @@ habilitado ifTrue:
 
 { #category : #'as yet unclassified' }
 BotonGenerico_UI >> textoBoton: unTexto [
-super label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 14); color: Color orange.
+super label: unTexto font: (LogicalFont familyName: 'Roboto' pointSize: 15); color: Color orange.
 ]

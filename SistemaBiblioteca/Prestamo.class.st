@@ -17,6 +17,16 @@ Prestamo >> dni [
 ^ dniUsuario 
 ]
 
+{ #category : #'as yet unclassified' }
+Prestamo >> esDeUsuario: unDni [
+^ dniUsuario = unDni
+]
+
+{ #category : #'as yet unclassified' }
+Prestamo >> estaVencido [
+^ fechaLimite isBefore: (Date today)
+]
+
 { #category : #accessing }
 Prestamo >> fechaLimite [
 

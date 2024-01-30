@@ -63,7 +63,7 @@ col1 add: (bib1 libros at: 1); add: (bib1 libros at: 5).
 "col1 add: libro1; add: libro5. B1"
 
 col2 := OrderedCollection new. 
-"col2 add: libro2; add: libro3; add: libro4. B2"
+"col2 add: libro2; add: libro3; add: libro4. B1"
 col2 add: (bib1 libros at: 2); add: (bib1 libros at: 3); add: (bib1 libros at: 4).
 
 col3 := OrderedCollection new. 
@@ -76,7 +76,7 @@ col4 add: (bib5 libros at: 5); add: (bib5 libros at: 6).
 
 col5 := OrderedCollection new. 
 "col3 add: libro2; add: libro6. B1"
-col5 add: (bib3 libros at: 2); add: (bib3 libros at: 3).
+col5 add: (bib3 libros at: 4); add: (bib3 libros at: 3).
 
 bib1 registrarPrestamoConLibros: col1 deUsuario: user1.
 bib4 registrarPrestamoConLibros: col3 deUsuario: user1.
@@ -203,7 +203,7 @@ Sistema >> verificarMulta: unDni [
 |col retorno usuario|
 usuario := self buscarUsuarioConDni: unDni.
 col := (self getPrestamosDeUsuario: unDni).
-retorno := (col detect: [ :p | (p fechaLimite) isBefore: (Date today) ] ifNone: [^ nil]).
+retorno := (col detect: [ :p | p estaVencido ] ifNone: [^ nil]).
 (retorno) ifNotNil: [ usuario multarConDias: 7 ].
 "retorna la primera biblioteca que detecta deuda, sino nil"
 ^ retorno idBiblioteca
