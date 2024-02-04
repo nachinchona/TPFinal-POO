@@ -40,7 +40,7 @@ Ventana_UI class >> crearVentanaConAncho: unAncho altura: unaAltura titulo: unTi
 frame := self new color: Color veryDarkGray ; extent: unAncho@unaAltura; borderColor: Color darkGray; borderWidth: 3.
 
 barra := self new color: Color veryDarkGray; extent: unAncho@20; borderColor: Color darkGray; borderWidth: 3.
-titulo := TextMorph new contents: (unTitulo asText allBold); fillsOwner: true.
+titulo := StringMorph new contents: (unTitulo asText allBold).
 titulo font: (LogicalFont familyName: 'Arial' pointSize: 20).
 
 bCerrar := BotonCerrar_UI new.
