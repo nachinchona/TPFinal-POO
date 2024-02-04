@@ -7,6 +7,12 @@ Class {
 	#category : #'SistemaBiblioteca_GUI'
 }
 
+{ #category : #accessing }
+Sistema_UI class >> start [
+(self new iniciarMenuPrincipalConSistema: (Sistema default)).
+
+]
+
 { #category : #'as yet unclassified' }
 Sistema_UI >> asignarSistema: unSistema [
 system := unSistema .
