@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfTPFinalPOO,
+	#name : #BaselineOfSistemaBiblioteca,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfTPFinalPOO
+	#category : #BaselineOfSistemaBiblioteca
 }
 
 { #category : #baselines }
-BaselineOfTPFinalPOO >> baseline: spec [
+BaselineOfSistemaBiblioteca >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
@@ -17,8 +17,7 @@ BaselineOfTPFinalPOO >> baseline: spec [
 		]
 ]
 
-{ #category : #baselines }
-BaselineOfTPFinalPOO >> projectClass [
+{ #category : #accessing }
+BaselineOfSistemaBiblioteca >> projectClass [
 	^ MetacelloCypressBaselineProject
-	
 ]
