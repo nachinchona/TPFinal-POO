@@ -12,7 +12,7 @@ Class {
 
 { #category : #accessing }
 Sistema class >> default [
-|libro1 libro2 libro3 libro4 libro5 libro6 bib1 bib2 bib3 bib4 bib5 bib6 user1 colBUser1 colBUser2 user2 user3 col1 col2 col3 col4 col5 colA colAllLibros colAllB colAllU sistema|
+|libro1 libro2 libro3 libro4 libro5 libro6 bib1 bib2 bib3 bib4 bib5 bib6 user1 colBUser1 colBUser2 user2 user3 col1 col2 col3 col4 col5 col6 colA colAllLibros colAllB colAllU sistema|
 
 colA := OrderedCollection new.
 colA add: 'Marcel Proust'.
@@ -78,11 +78,17 @@ col5 := OrderedCollection new.
 "col3 add: libro2; add: libro6. B1"
 col5 add: (bib3 libros at: 4); add: (bib3 libros at: 3).
 
+col6 := OrderedCollection new. 
+"col3 add: libro2; add: libro6. B1"
+col6 add: (bib6 libros at: 4); add: (bib6 libros at: 3).
+
 bib1 registrarPrestamoConLibros: col1 deUsuario: user1.
 bib4 registrarPrestamoConLibros: col3 deUsuario: user1.
 bib1 registrarPrestamoConLibros: col2 deUsuario: user2.
 bib5 registrarPrestamoConLibros: col4 deUsuario: user3.
+"dos préstamos vencidos de usuario 3"
 bib3 registrarPrestamoVencidoConLibros: col5 deUsuario: user3.
+bib6 registrarPrestamoVencidoConLibros: col6 deUsuario: user3.
 
 sistema := self new.
 sistema inicializarSistemaConColBibliotecas: colAllB colUsuarios: colAllU colAutores: 1 cantDiasMulta: 7.
@@ -134,6 +140,12 @@ self changed.
 ]
 
 { #category : #'as yet unclassified' }
+Sistema >> devolverPrestamoAL: unDni deBib: unaIdBib [
+(self buscarBibliotecaConId: unaIdBib) devolverPrestamoAL: unDni.
+self changed.
+]
+
+{ #category : #'as yet unclassified' }
 Sistema >> eliminarUsuario: unDni [
 colUsuarios remove: (self buscarUsuarioConDni: unDni) ifAbsent: [^false].
 ^true
@@ -145,7 +157,8 @@ Sistema >> generarListadoUsuariosRetrasados [
 
 colRetorno := OrderedCollection new.
 
-colUsuarios do: [ :u | |idBiblioteca| idBiblioteca :=  self verificarMulta: u dni. idBiblioteca ifNotNil: [ colRetorno add: {u. self verificarMulta: u dni.} ] ].
+"si bien podría simplemente ir coleccionando las tuplas que retorna el mensaje verificarMulta, debo convertir el dni en un objeto usuario en algún punto para que pueda ser manipulado por la tabla visual UsuarioAtrasado (semánticamente sigue siendo el mismo usuario)"
+colUsuarios do: [ :u | |tupla| tupla :=  self verificarMulta: u. tupla ifNotNil: [ colRetorno add: {self buscarUsuarioConDni: (tupla at: 1). (tupla at: 2).} ] ].
 
 ^ colRetorno
 ]
@@ -199,12 +212,11 @@ colBibliotecas ifNil: [ ^ 1 ].
 ]
 
 { #category : #'as yet unclassified' }
-Sistema >> verificarMulta: unDni [
-|col retorno usuario|
-usuario := self buscarUsuarioConDni: unDni.
-col := (self getPrestamosDeUsuario: unDni).
-retorno := (col detect: [ :p | p estaVencido ] ifNone: [^ nil]).
-(retorno) ifNotNil: [ usuario multarConDias: 7 ].
+Sistema >> verificarMulta: unUsuario [
+|rta|
+rta := unUsuario getDeuda.
+rta ifNil: [^ nil].
+unUsuario multarConDias: 7.
 "retorna la primera biblioteca que detecta deuda, sino nil"
-^ retorno idBiblioteca
+^ rta
 ]

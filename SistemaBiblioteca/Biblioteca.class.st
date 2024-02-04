@@ -31,11 +31,25 @@ self changed.
 ]
 
 { #category : #'as yet unclassified' }
+Biblioteca >> desmarcarPrestamo: unPrestamo [
+unPrestamo libros do: [ :l | l desmarcar ]
+]
+
+{ #category : #'as yet unclassified' }
 Biblioteca >> devolverPrestamo: unDni [
 |prestamo|
-prestamo := colPrestamos detect: [ :p | p dni = unDni ].
+prestamo := colPrestamos detect: [ :p | p esDeUsuario: unDni ].
 colPrestamos remove: prestamo.
-prestamo libros do: [ :l | l desmarcar ].
+self desmarcarPrestamo: prestamo.
+self changed: {2. prestamo.}.
+]
+
+{ #category : #'as yet unclassified' }
+Biblioteca >> devolverPrestamoAL: unDni [
+|prestamo|
+prestamo := colPrestamos detect: [ :p | p dni = unDni & ('*P' match: p id)].
+colPrestamos remove: prestamo.
+self desmarcarPrestamo: prestamo.
 self changed: {2. prestamo.}.
 ]
 
@@ -59,8 +73,25 @@ Biblioteca >> getPrestamos [
 { #category : #'as yet unclassified' }
 Biblioteca >> getPrestamosDeUsuario: unDni [
 |colRetorno|
-colRetorno := colPrestamos select: [ :p | p esDeUsuario: unDni].
-^ colRetorno 
+colRetorno := colPrestamos select: [ :p | (p esDeUsuario: unDni) ].
+^ colRetorno
+]
+
+{ #category : #'as yet unclassified' }
+Biblioteca >> getPrestamosVencidosDeUsuario: unDni [
+
+"método antes utilizado para generarListadoUsuariosRetrasados (sin uso actual pero puede ser útil)"
+|colRetorno|
+colRetorno := colPrestamos select: [ :p | (p esDeUsuario: unDni) and: (p estaVencido) ].
+^ colRetorno
+]
+
+{ #category : #'as yet unclassified' }
+Biblioteca >> getUsuarioDeudor: unDni [
+
+"a diferencia de obtener todos los préstamos vencidos, este método se detiene al encontrar el primer préstamo vencido, retornando entonces el dni del usuario deudor y su biblioteca correspondiente"
+(colPrestamos anySatisfy: [ :p | (p esDeUsuario: unDni) and: (p estaVencido) ])
+ifTrue: [^ {unDni. id.}] ifFalse: [^ nil ].
 ]
 
 { #category : #accessing }
@@ -146,7 +177,7 @@ ultIdPrestamo := ultIdPrestamo + 1.
 nuevaId := ((id)asString, '-', (ultIdPrestamo)asString)asString.
 
 "detecta si el Usuario tiene un préstamo activo en la colección de préstamos"
-tienePrestamo := (colPrestamos anySatisfy:  [ :xPrestamo | xPrestamo dni = unUsuario dni]).
+tienePrestamo := self usuarioTienePrestamo: unUsuario.
 tienePrestamo ifTrue: [^ false ]
 ifFalse: 
 	[
@@ -161,7 +192,7 @@ ifFalse:
 																			esPlus 
 																			ifTrue: [ colPlus add: unLibro. unLibro marcarConDni: unUsuario dni ]
 																			ifFalse: [ ^ false ] ] 
-																ifFalse: [ colVerificada add: unLibro. unLibro marcarConDni: unUsuario dni].
+																ifFalse: [ colVerificada add: unLibro. unLibro marcarConDni: unUsuario dni ].
 															]
 												ifTrue:  [^ false].
    ].
@@ -177,7 +208,7 @@ ifFalse:
 		[
 		"Si la colección de libros verificada plus no es vacía, se crea el préstamo con los libros disponibles"	
 		unPrestamo := Prestamo new. 
-		unPrestamo inicializarPrestamoConId: nuevaId conLibros: colPlus deUsuario: unUsuario conDias: ((cantDiasPrestamo/2) ceiling) enBib: id.
+		unPrestamo inicializarPrestamoConId: (nuevaId,'P') conLibros: colPlus deUsuario: unUsuario conDias: ((cantDiasPrestamo/2) ceiling) enBib: id.
 		colPrestamos add: unPrestamo 
 		].
 	]
@@ -186,7 +217,7 @@ ifFalse:
 ] .
 
 "
-devuelve un arreglo dinamico con 1. la operacion realizada (1 adicion 2 removicion) y el prestamo en cuestion.
+changed envia como argumento un arreglo dinamico con 1. la operacion realizada (1 adicion 2 removicion) y el prestamo en cuestion.
 "
 self changed: {1. unPrestamo.}.
 
@@ -283,4 +314,9 @@ Biblioteca >> telefono [
 Biblioteca >> telefono: anObject [
 
 	telefono := anObject
+]
+
+{ #category : #'as yet unclassified' }
+Biblioteca >> usuarioTienePrestamo: unUsuario [
+^ colPrestamos anySatisfy:  [ :xPrestamo | xPrestamo dni = unUsuario dni]
 ]

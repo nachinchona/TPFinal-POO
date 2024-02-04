@@ -69,6 +69,11 @@ Usuario >> dni: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+Usuario >> esDeUsuario: unPrestamo [
+^ dni = unPrestamo dni
+]
+
+{ #category : #'as yet unclassified' }
 Usuario >> esPlus [
 "se pretende crear usuarios de acuerdo a sus subclases"
 ^ self subclassResponsibility  
@@ -82,6 +87,29 @@ Usuario >> estaAlDiaConCuota [
 { #category : #'as yet unclassified' }
 Usuario >> estaMultado [
 ^ multado 
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> getDeuda [
+|retorno|
+bibInteres do: [ :u |  retorno := u getUsuarioDeudor: dni. retorno ifNotNil: [^ retorno ]].
+^ nil
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> getPrestamos [
+|col|
+col := OrderedCollection new.
+bibInteres do: [ :u | |colAux| colAux := u getPrestamosDeUsuario: dni. colAux ifNotEmpty: [col addAll: colAux].].
+^ col
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> getPrestamosVencidos [
+|col|
+col := OrderedCollection new.
+bibInteres do: [ :u | |colAux| colAux := u getPrestamosVencidosDeUsuario: dni. colAux ifNotEmpty: [col addAll: colAux].].
+^ col
 ]
 
 { #category : #'as yet unclassified' }

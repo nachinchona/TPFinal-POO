@@ -41,7 +41,7 @@ frame := self new color: Color veryDarkGray ; extent: unAncho@unaAltura; borderC
 
 barra := self new color: Color veryDarkGray; extent: unAncho@20; borderColor: Color darkGray; borderWidth: 3.
 titulo := TextMorph new contents: (unTitulo asText allBold); fillsOwner: true.
-titulo font: (LogicalFont familyName: 'Roboto' pointSize: 20).
+titulo font: (LogicalFont familyName: 'Arial' pointSize: 20).
 
 bCerrar := BotonCerrar_UI new.
 frame inicializarBotones .

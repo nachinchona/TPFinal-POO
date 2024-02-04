@@ -129,7 +129,7 @@ VistaAdmin >> inicializarConSistema: unSistema [
 
 self asignarSistema: unSistema.
 
-(system getUsuarios) do: [ :u | system verificarMulta: (u dni) ].
+(system getUsuarios) do: [ :u | system verificarMulta: u].
 
 self añadirMorph: (TextMorph new contents: 'Usuarios') conMargen: 10.
 

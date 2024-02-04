@@ -73,7 +73,7 @@ bRealizarPrestamo := (BotonGenerico_UI new textoBoton: 'Realizar préstamo').
 bRealizarPrestamo definirAccion: [ self delete. self vistaPrestamo: unDni ].
 self añadirMorph: bRealizarPrestamo conMargen: 20.
 
-bDevolverPrestamo := (BotonGenerico_UI new textoBoton: 'Devolver préstamo'; definirAccion: [ prestamosElegidos := (pTabla selectedIndexes) collect: [:i | pDataSource elementAt: i]. prestamosElegidos do: [ :p | system devolverPrestamo: unDni deBib: (p idBiblioteca). ]. self mensaje: 'Tus préstamos han sido devueltos correctamente.' ]).
+bDevolverPrestamo := (BotonGenerico_UI new textoBoton: 'Devolver préstamo'; definirAccion: [ prestamosElegidos := (pTabla selectedIndexes) collect: [:i | pDataSource elementAt: i]. prestamosElegidos do: [ :p | ('*P' match: (p id)) ifFalse: [system devolverPrestamo: unDni deBib: (p idBiblioteca)] ifTrue: [system devolverPrestamoAL: unDni deBib: (p idBiblioteca)]. ]. self mensaje: 'Tus préstamos han sido devueltos correctamente.' ]).
 self añadirMorph: bDevolverPrestamo conMargen: 20.
 
 bSeleccionarTodos := BotonGenerico_UI new textoBoton: 'Seleccionar todos'; definirAccion: [ pTabla selectAll. ].
@@ -87,7 +87,7 @@ self añadirMorph: bCerrarSesion conMargen: 20.
 
 self openCenteredInWorld .
 
-(system verificarMulta: unDni) ifNotNil: [ self error: 'Algún préstamo no fue devuelto a tiempo. Se le aplicó una suspensión de ',(system cantDiasMulta) asString, ' días: no podrá realizar préstamos durante ese período.'. bRealizarPrestamo deshabilitar ].
+(system verificarMulta: usuario) ifNotNil: [ self error: 'Algún préstamo no fue devuelto a tiempo. Se le aplicó una suspensión de ',(system cantDiasMulta) asString, ' días: no podrá realizar préstamos durante ese período.'. bRealizarPrestamo deshabilitar ].
 ]
 
 { #category : #updating }
