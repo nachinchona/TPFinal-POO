@@ -6,8 +6,7 @@ Class {
 		'editorial',
 		'anioEdicion',
 		'autores',
-		'enDeuda',
-		'dniTemp'
+		'enDeuda'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -48,7 +47,6 @@ Libro >> autores: anObject [
 { #category : #'as yet unclassified' }
 Libro >> desmarcar [
 enDeuda := false.
-dniTemp := 0.
 ]
 
 { #category : #accessing }
@@ -80,13 +78,11 @@ editorial := unaEd.
 anioEdicion := unAnio .
 autores := unaColA .
 enDeuda := false.
-dniTemp := 0.
 ]
 
 { #category : #'as yet unclassified' }
-Libro >> marcarConDni: unDni [
+Libro >> marcar [
 enDeuda := true.
-dniTemp := unDni.
 ]
 
 { #category : #accessing }

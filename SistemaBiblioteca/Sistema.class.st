@@ -124,6 +124,12 @@ Sistema >> buscarBibliotecaConId: unaId [
 ]
 
 { #category : #'as yet unclassified' }
+Sistema >> buscarBibliotecaConPrestamo: unPrestamo [
+|rta|
+^ colBibliotecas do: [ :b | (b getPrestamos) do: [ :p | rta := p = unPrestamo. rta ifTrue: [^b]]  ]
+]
+
+{ #category : #'as yet unclassified' }
 Sistema >> buscarUsuarioConDni: unDni [
 ^ colUsuarios detect: [ :u | u dni = unDni asNumber] ifNone: [ nil ].
 ]
@@ -134,14 +140,14 @@ Sistema >> cantDiasMulta [
 ]
 
 { #category : #'as yet unclassified' }
-Sistema >> devolverPrestamo: unDni deBib: unaIdBib [
-(self buscarBibliotecaConId: unaIdBib) devolverPrestamo: unDni.
+Sistema >> devolverPrestamo: unDni deBib: unaBib [
+unaBib devolverPrestamo: unDni.
 self changed.
 ]
 
 { #category : #'as yet unclassified' }
-Sistema >> devolverPrestamoAL: unDni deBib: unaIdBib [
-(self buscarBibliotecaConId: unaIdBib) devolverPrestamoAL: unDni.
+Sistema >> devolverPrestamoAL: unUsuario deBib: unaBib [
+unaBib devolverPrestamoAL: unUsuario.
 self changed.
 ]
 
@@ -158,7 +164,7 @@ Sistema >> generarListadoUsuariosRetrasados [
 colRetorno := OrderedCollection new.
 
 "si bien podría simplemente ir coleccionando las tuplas que retorna el mensaje verificarMulta, debo convertir el dni en un objeto usuario en algún punto para que pueda ser manipulado por la tabla visual UsuarioAtrasado (semánticamente sigue siendo el mismo usuario)"
-colUsuarios do: [ :u | |tupla| tupla :=  self verificarMulta: u. tupla ifNotNil: [ colRetorno add: {self buscarUsuarioConDni: (tupla at: 1). (tupla at: 2).} ] ].
+colUsuarios do: [ :u | |tupla| tupla :=  u verificarMulta. tupla ifNotNil: [ colRetorno add: tupla ] ].
 
 ^ colRetorno
 ]
@@ -174,10 +180,10 @@ Sistema >> getBibliotecas [
 ]
 
 { #category : #'as yet unclassified' }
-Sistema >> getPrestamosDeUsuario: unDni [
+Sistema >> getPrestamosDeUsuario: unUsuario [
 |colTotal colAux|
 colTotal := OrderedCollection new.
-colBibliotecas do: [ :b | colAux := (b getPrestamosDeUsuario: unDni). colAux ifNotEmpty: [colTotal addAll: colAux]. ].
+colBibliotecas do: [ :b | colAux := (b getPrestamosDeUsuario: unUsuario). colAux ifNotEmpty: [colTotal addAll: colAux]. ].
 ^ colTotal 
 ]
 
@@ -212,7 +218,13 @@ colBibliotecas ifNil: [ ^ 1 ].
 ]
 
 { #category : #'as yet unclassified' }
+Sistema >> reasignarPrestamosDe: unUsuario a: otroUsuario [
+colBibliotecas do: [ :b | (b reasignarPrestamosDe: unUsuario a: otroUsuario) ]. 
+]
+
+{ #category : #'as yet unclassified' }
 Sistema >> verificarMulta: unUsuario [
+"DEPRECATED"
 |rta|
 rta := unUsuario getDeuda.
 rta ifNil: [^ nil].

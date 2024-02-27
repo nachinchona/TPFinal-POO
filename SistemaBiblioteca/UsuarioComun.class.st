@@ -10,22 +10,23 @@ UsuarioComun >> cambiarModalidad: unSistema [
 
 usuarioCambiado := UsuarioPlus crearConNombre: nombre apellido: apellido dni: dni contraseña: contrasenia .
 
-(self estaAlDiaConCuota) ifTrue: 
-[  
+unSistema reasignarPrestamosDe: self a: usuarioCambiado.
 (unSistema eliminarUsuario: (self dni)).
 (unSistema agregarUsuario: usuarioCambiado).
-usuarioCambiado setBibliotecasInteres: (self bibliotecasInteres).
-] ifFalse:
-[
-^ self
-].
 
-self changed.
+usuarioCambiado setBibliotecasInteres: (self bibliotecasInteres).
+
+self changed: usuarioCambiado.
 
 ^ usuarioCambiado
 ]
 
 { #category : #'as yet unclassified' }
 UsuarioComun >> esPlus [
+^ false
+]
+
+{ #category : #accessing }
+UsuarioComun >> puedePedirAudioLibros [
 ^ false
 ]

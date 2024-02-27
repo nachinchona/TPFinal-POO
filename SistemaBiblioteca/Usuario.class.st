@@ -7,9 +7,8 @@ Class {
 		'dni',
 		'contrasenia',
 		'multado',
-		'fechaLimite',
-		'bibInteres',
-		'estaAlDiaConCuota'
+		'fechaTerminacionMulta',
+		'bibliotecasInteres'
 	],
 	#category : #SistemaBiblioteca
 }
@@ -36,7 +35,7 @@ Usuario >> apellido: anObject [
 
 { #category : #initialization }
 Usuario >> bibliotecasInteres [ 
-^ bibInteres 
+^ bibliotecasInteres 
 ]
 
 { #category : #accessing }
@@ -49,6 +48,29 @@ Usuario >> contrasenia [
 Usuario >> contrasenia: anObject [
 
 	contrasenia := anObject
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> crearPrestamoConBib: unaBiblioteca yLibros: unaColLibros [
+|colVerificada|
+
+colVerificada := OrderedCollection new.
+unaColLibros do: [ :unLibro | (unLibro esAudioLibro) 
+												ifFalse: [
+																(unLibro estaEnDeuda)
+																ifFalse: [ colVerificada add: unLibro. unLibro marcar. ].
+																"aquellos libros en deuda son ignorados"
+															]
+									  "si algun libro es audiolibro no pasa nada, simplemente no se agrega al prestamo"
+   					  ].
+											   
+(colVerificada isEmpty) ifFalse: 
+	[
+	unaBiblioteca agregarPrestamoConLibros: colVerificada de: self. 
+ 	]
+ifTrue:  [ ^ false ]. 
+
+^ true
 ]
 
 { #category : #'as yet unclassified' }
@@ -79,11 +101,6 @@ Usuario >> esPlus [
 ^ self subclassResponsibility  
 ]
 
-{ #category : #accessing }
-Usuario >> estaAlDiaConCuota [
-^estaAlDiaConCuota
-]
-
 { #category : #'as yet unclassified' }
 Usuario >> estaMultado [
 ^ multado 
@@ -92,7 +109,7 @@ Usuario >> estaMultado [
 { #category : #'as yet unclassified' }
 Usuario >> getDeuda [
 |retorno|
-bibInteres do: [ :u |  retorno := u getUsuarioDeudor: dni. retorno ifNotNil: [^ retorno ]].
+bibliotecasInteres do: [ :b | retorno := b getUsuarioDeudor: self. retorno ifNotNil: [^ retorno ]].
 ^ nil
 ]
 
@@ -100,7 +117,7 @@ bibInteres do: [ :u |  retorno := u getUsuarioDeudor: dni. retorno ifNotNil: [^ 
 Usuario >> getPrestamos [
 |col|
 col := OrderedCollection new.
-bibInteres do: [ :u | |colAux| colAux := u getPrestamosDeUsuario: dni. colAux ifNotEmpty: [col addAll: colAux].].
+bibliotecasInteres do: [ :u | |colAux| colAux := u getPrestamosDeUsuario: self. colAux ifNotEmpty: [col addAll: colAux].].
 ^ col
 ]
 
@@ -108,7 +125,7 @@ bibInteres do: [ :u | |colAux| colAux := u getPrestamosDeUsuario: dni. colAux if
 Usuario >> getPrestamosVencidos [
 |col|
 col := OrderedCollection new.
-bibInteres do: [ :u | |colAux| colAux := u getPrestamosVencidosDeUsuario: dni. colAux ifNotEmpty: [col addAll: colAux].].
+bibliotecasInteres do: [ :u | |colAux| colAux := u getPrestamosVencidosDeUsuario: dni. colAux ifNotEmpty: [col addAll: colAux].].
 ^ col
 ]
 
@@ -119,8 +136,7 @@ nombre := unNombre.
 dni := unDni.
 contrasenia := unaContraseña.
 multado := false.
-estaAlDiaConCuota := false.
-
+fechaTerminacionMulta := nil.
 
 ]
 
@@ -132,13 +148,13 @@ multado := true.
 { #category : #'as yet unclassified' }
 Usuario >> multarConDias: cantDias [
 multado := true.
-fechaLimite := (Date today) addDays: cantDias.
+fechaTerminacionMulta := (Date today) addDays: cantDias.
 ]
 
 { #category : #'instance creation' }
 Usuario >> new [
 "es abstracta, no se pueden crear instancias de Usuario (igual, esto no funciona)"
-^ self subclassResponsibility.
+"^ self subclassResponsibility."
 ]
 
 { #category : #accessing }
@@ -153,12 +169,22 @@ Usuario >> nombre: anObject [
 	nombre := anObject
 ]
 
-{ #category : #'as yet unclassified' }
-Usuario >> pagarCuota [
-estaAlDiaConCuota := true.
+{ #category : #accessing }
+Usuario >> puedePedirAudioLibros [
+^ self subclassResponsibility 
 ]
 
 { #category : #initialization }
 Usuario >> setBibliotecasInteres: colBib [
-bibInteres := colBib .
+bibliotecasInteres := colBib .
+]
+
+{ #category : #'as yet unclassified' }
+Usuario >> verificarMulta [
+|rta|
+rta := self getDeuda.
+rta ifNil: [^ nil].
+self multarConDias: 7.
+"retorna la primera biblioteca que detecta deuda, sino nil"
+^ rta
 ]

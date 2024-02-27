@@ -3,28 +3,39 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'id',
-		'idBiblioteca',
-		'dniUsuario',
+		'usuario',
 		'fechaRealizacion',
 		'fechaLimite',
+		'fechaEntrega',
 		'libros'
 	],
 	#category : #SistemaBiblioteca
 }
 
 { #category : #'as yet unclassified' }
-Prestamo >> dni [
-^ dniUsuario 
+Prestamo >> esDeUsuario: unUsuario [
+^ usuario = unUsuario
 ]
 
-{ #category : #'as yet unclassified' }
-Prestamo >> esDeUsuario: unDni [
-^ dniUsuario = unDni
+{ #category : #accessing }
+Prestamo >> esPlus [
+"chequea si esPlus (solo tiene audioLibros) a traves de un patron sobre su ID (tambien podria preguntar si el primer libro es audioLibro y serviria igual)"
+^ ('*P' match: id)
+
+]
+
+{ #category : #accessing }
+Prestamo >> estaActivo [
+^ fechaEntrega isNil
 ]
 
 { #category : #'as yet unclassified' }
 Prestamo >> estaVencido [
-^ fechaLimite isBefore: (Date today)
+self estaActivo
+ifTrue:
+[ (fechaLimite isBefore: (Date today)) ifTrue: [ ^ true ] ifFalse: [ ^ false ] ]
+ifFalse: 
+[ ^ false ]
 ]
 
 { #category : #accessing }
@@ -45,25 +56,35 @@ Prestamo >> id [
 	^ id
 ]
 
-{ #category : #accessing }
-Prestamo >> idBiblioteca [
-^ idBiblioteca 
-]
-
 { #category : #'as yet unclassified' }
-Prestamo >> inicializarPrestamoConId: unaId conLibros: unaColLibros deUsuario: unUsuario conDias: unaCantDias enBib: otraId [
+Prestamo >> inicializarPrestamoConId: unaId conLibros: unaColLibros deUsuario: unUsuario conDias: unaCantDias [
 id := unaId.
 libros := unaColLibros .
-idBiblioteca := otraId.
-dniUsuario := unUsuario dni.
+usuario := unUsuario.
 fechaRealizacion := Date today.
 fechaLimite := (fechaRealizacion addDays: unaCantDias).
+fechaEntrega := nil.
 ]
 
 { #category : #accessing }
 Prestamo >> libros [
 
 	^ libros
+]
+
+{ #category : #'as yet unclassified' }
+Prestamo >> marcarComoEntregado [
+fechaEntrega := Date today.
+]
+
+{ #category : #'as yet unclassified' }
+Prestamo >> reasignarUsuario: unUsuario [
+usuario := unUsuario .
+]
+
+{ #category : #accessing }
+Prestamo >> usuario [
+^usuario
 ]
 
 { #category : #'as yet unclassified' }

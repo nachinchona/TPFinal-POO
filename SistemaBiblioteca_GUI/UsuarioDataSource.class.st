@@ -39,7 +39,7 @@ system := unSistema .
 ]
 
 { #category : #'as yet unclassified' }
-UsuarioDataSource >> bibInteresCellColumn: column row: rowIndex [
+UsuarioDataSource >> bibliotecasInteresCellColumn: column row: rowIndex [
 |tabla boton|
 boton := BotonGenerico_UI new.
 tabla := Tabla_UI crearBConDataSource: (BibliotecaDataSource elements: ((elements at: rowIndex) bibliotecasInteres)) ancho: 500 altura: 200.
@@ -54,7 +54,7 @@ UsuarioDataSource >> cellColumn: column row: rowIndex [
 (column id = 'Nombre') ifTrue: [ ^ self nombreCellColumn: column row: rowIndex ].
 (column id = 'Apellido') ifTrue: [ ^ self apellidoCellColumn: column row: rowIndex ].
 (column id = 'Multado') ifTrue: [ ^ self multaCellColumn: column row: rowIndex ].
-(column id = 'Bib. interés') ifTrue: [ ^ self bibInteresCellColumn: column row: rowIndex ].
+(column id = 'Bib. interés') ifTrue: [ ^ self bibliotecasInteresCellColumn: column row: rowIndex ].
 (column id = 'Préstamos') ifTrue: [ ^ self prestamosCellColumn: column row: rowIndex ].
 ]
 
@@ -83,7 +83,7 @@ UsuarioDataSource >> nombreCellColumn: column row: rowIndex [
 UsuarioDataSource >> prestamosCellColumn: column row: rowIndex [
 |tabla boton|
 boton := BotonGenerico_UI new.
-tabla := Tabla_UI crearPConDataSource: (PrestamoDataSource elements: (system getPrestamosDeUsuario: ((elements at: rowIndex) dni) )) ancho: 500 altura: 200.
+tabla := Tabla_UI crearPConDataSource: (PrestamoDataSource elements: (system getPrestamosDeUsuario: ((elements at: rowIndex)) )) ancho: 500 altura: 200.
 ^ FTCellMorph new
 		addMorphBack: (boton definirAccion: [Ventana_UI crearConMorph: tabla]; label: 'Ver préstamos'; color: (Color r: 0.4 g: 0.8 b: 0.6));
 		yourself
