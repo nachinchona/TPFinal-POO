@@ -42,7 +42,7 @@ unaColLibros do: [ :unLibro | (unLibro esAudioLibro)
 (colPlus isEmpty) ifFalse: 
 	[
 	"Si la colección de audiolibros no es vacía, se crea el préstamo con los libros disponibles"
-	unaBiblioteca agregarPrestamoConLibros: colPlus de: self. 
+	unaBiblioteca agregarPrestamoALConLibros: colPlus de: self. 
 	]
 ifTrue: [ ^ false ].
 

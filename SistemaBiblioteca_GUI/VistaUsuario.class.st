@@ -55,7 +55,7 @@ modalidadMorph := TextMorph new contents: ((usuario esPlus) ifTrue: [ 'Usted es 
 
 self añadirMorph: modalidadMorph conMargen: 20.
 
-bCambioModalidad := BotonGenerico_UI new textoBoton: 'Cambiar modalidad'; definirAccion: [ |usuarioCambiado| usuarioCambiado := (usuario cambiarModalidad: unSistema). usuario addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.'].
+bCambioModalidad := BotonGenerico_UI new textoBoton: 'Cambiar modalidad'; definirAccion: [ |usuarioCambiado| usuarioCambiado := (usuario cambiarModalidad: unSistema). usuarioCambiado addDependent: self. self mensaje: 'Usted ha cambiado su modalidad correctamente.'].
 self añadirMorph: bCambioModalidad conMargen: 20.
 
 "el boton pagar solo se habilita si el usuario que inicio sesion es plus"
@@ -77,7 +77,7 @@ bRealizarPrestamo := (BotonGenerico_UI new textoBoton: 'Realizar préstamo').
 bRealizarPrestamo definirAccion: [ self delete. self vistaPrestamo: unDni ].
 self añadirMorph: bRealizarPrestamo conMargen: 20.
 
-bDevolverPrestamo := (BotonGenerico_UI new textoBoton: 'Devolver préstamo'; definirAccion: [ prestamosElegidos := (pTabla selectedIndexes) collect: [:i | pDataSource elementAt: i]. prestamosElegidos do: [ :p | ('*P' match: (p id)) ifFalse: [system devolverPrestamo: usuario deBib: (system buscarBibliotecaConPrestamo: p)] ifTrue: [system devolverPrestamoAL: usuario deBib: (system buscarBibliotecaConPrestamo: p)]. ]. self mensaje: 'Tus préstamos han sido devueltos correctamente.' ]).
+bDevolverPrestamo := (BotonGenerico_UI new textoBoton: 'Devolver préstamo'; definirAccion: [ prestamosElegidos := (pTabla selectedIndexes) collect: [:i | pDataSource elementAt: i]. prestamosElegidos do: [ :p | (p esPlus) ifFalse: [system devolverPrestamo: usuario deBib: (system buscarBibliotecaConPrestamo: p)] ifTrue: [system devolverPrestamoAL: usuario deBib: (system buscarBibliotecaConPrestamo: p)]. ]. self mensaje: 'Tus préstamos han sido devueltos correctamente.' ]).
 self añadirMorph: bDevolverPrestamo conMargen: 20.
 
 bSeleccionarTodos := BotonGenerico_UI new textoBoton: 'Seleccionar todos'; definirAccion: [ pTabla selectAll. ].
@@ -97,7 +97,6 @@ self openCenteredInWorld .
 { #category : #updating }
 VistaUsuario >> update: unUsuario [
 
-unUsuario inspect.
 plus := plus not.
 modalidadMorph contents: ((plus) ifTrue: [ 'Usted es usuario plus.' ] ifFalse: [ 'Usted es usuario común.' ]).
 plus ifFalse: [ bPagar deshabilitar ] ifTrue: [ bPagar habilitar; color: Color red. ].

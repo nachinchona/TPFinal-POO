@@ -110,6 +110,8 @@ Usuario >> estaMultado [
 Usuario >> getDeuda [
 |retorno|
 bibliotecasInteres do: [ :b | retorno := b getUsuarioDeudor: self. retorno ifNotNil: [^ retorno ]].
+retorno ifNil: [ self multarConDias: 7. ].
+"retorna la primera biblioteca que detecta deuda, sino nil"
 ^ nil
 ]
 

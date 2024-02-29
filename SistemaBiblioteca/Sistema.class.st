@@ -163,8 +163,7 @@ Sistema >> generarListadoUsuariosRetrasados [
 
 colRetorno := OrderedCollection new.
 
-"si bien podría simplemente ir coleccionando las tuplas que retorna el mensaje verificarMulta, debo convertir el dni en un objeto usuario en algún punto para que pueda ser manipulado por la tabla visual UsuarioAtrasado (semánticamente sigue siendo el mismo usuario)"
-colUsuarios do: [ :u | |tupla| tupla :=  u verificarMulta. tupla ifNotNil: [ colRetorno add: tupla ] ].
+colUsuarios do: [ :u | |tupla| tupla :=  u getDeuda. tupla ifNotNil: [ colRetorno add: tupla ] ].
 
 ^ colRetorno
 ]

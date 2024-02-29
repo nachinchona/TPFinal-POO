@@ -30,6 +30,15 @@ self changed: { 1. unPrestamo. }
 ]
 
 { #category : #'as yet unclassified' }
+Biblioteca >> agregarPrestamoALConLibros: unaColLibros de: unUsuario [
+|unPrestamo nuevaId|
+unPrestamo := Prestamo new.
+nuevaId := self getIDPrestamoSig.
+unPrestamo inicializarPrestamoConId: nuevaId conLibros: unaColLibros deUsuario: unUsuario conDias: (cantDiasPrestamo/2) ceiling.
+self agregarPrestamo: unPrestamo.
+]
+
+{ #category : #'as yet unclassified' }
 Biblioteca >> agregarPrestamoConLibros: unaColLibros de: unUsuario [
 |unPrestamo nuevaId|
 unPrestamo := Prestamo new.
@@ -46,17 +55,11 @@ self changed.
 ]
 
 { #category : #'as yet unclassified' }
-Biblioteca >> desmarcarPrestamo: unPrestamo [
-unPrestamo libros do: [ :l | l desmarcar ]
-]
-
-{ #category : #'as yet unclassified' }
 Biblioteca >> devolverPrestamo: unUsuario [
 |prestamo|
 prestamo := colPrestamos detect: [ :p | p esDeUsuario: unUsuario ].
 colPrestamos remove: prestamo.
 prestamo marcarComoEntregado.
-self desmarcarPrestamo: prestamo.
 self changed: {2. prestamo.}.
 ]
 
@@ -65,8 +68,7 @@ Biblioteca >> devolverPrestamoAL: unUsuario [
 |prestamo|
 prestamo := colPrestamos detect: [ :p | (p esDeUsuario: unUsuario) & p esPlus ].
 colPrestamos remove: prestamo.
-prestamo marcarComoEntregado. "establece la fecha de entrega al dia de hoy"
-self desmarcarPrestamo: prestamo.
+prestamo marcarComoEntregado. "establece la fecha de entrega al dia de hoy y desmarca sus libros"
 self changed: {2. prestamo.}.
 ]
 
@@ -95,11 +97,6 @@ Biblioteca >> getIDPrestamoSig [
 { #category : #'as yet unclassified' }
 Biblioteca >> getNumUltimoPrestamo [
 ultIdPrestamo := ultIdPrestamo + 1.
-^ ultIdPrestamo 
-]
-
-{ #category : #'as yet unclassified' }
-Biblioteca >> getNumUltimoPrestamoSinAumentar [
 ^ ultIdPrestamo 
 ]
 

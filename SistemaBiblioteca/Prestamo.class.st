@@ -19,8 +19,8 @@ Prestamo >> esDeUsuario: unUsuario [
 
 { #category : #accessing }
 Prestamo >> esPlus [
-"chequea si esPlus (solo tiene audioLibros) a traves de un patron sobre su ID (tambien podria preguntar si el primer libro es audioLibro y serviria igual)"
-^ ('*P' match: id)
+"chequea si esPlus (solo tiene audioLibros)"
+^ libros first esAudioLibro
 
 ]
 
@@ -74,6 +74,7 @@ Prestamo >> libros [
 
 { #category : #'as yet unclassified' }
 Prestamo >> marcarComoEntregado [
+libros do: [ :l | l desmarcar ].
 fechaEntrega := Date today.
 ]
 
